@@ -1,0 +1,111 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Page Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up">
+        <span class="section-label">Engineering Insights</span>
+        <h1 class="page-hero-title">
+          The Specter<br>
+          <span class="gradient-text">Engineering Blog</span>
+        </h1>
+        <p class="page-hero-desc">
+          Deep technical content from the engineers building production systems for governments, banks, and enterprises.
+          No fluff — just architecture, patterns, and lessons from real projects.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Post -->
+  @if (featuredPost) {
+    <section class="section-sm">
+      <div class="container-xl">
+        <a [routerLink]="['/blog', featuredPost.slug]" class="featured-post card-base">
+          <div class="featured-badge">Featured</div>
+          <div class="featured-content">
+            <div class="featured-meta">
+              <span class="blog-cat-chip" [style.background]="getCategoryColor(featuredPost.category) + '22'" [style.color]="getCategoryColor(featuredPost.category)">
+                {{ featuredPost.category }}
+              </span>
+              <span class="blog-meta-text">{{ featuredPost.date }}</span>
+              <span class="blog-meta-sep">·</span>
+              <span class="blog-meta-text">{{ featuredPost.readTime }}</span>
+            </div>
+            <h2 class="featured-title">{{ featuredPost.title }}</h2>
+            <p class="featured-excerpt">{{ featuredPost.excerpt }}</p>
+            <div class="featured-author">
+              <div class="author-avatar">{{ featuredPost.authorAvatar }}</div>
+              <span class="author-name">{{ featuredPost.author }}</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+  }
+
+  <!-- Filter + Grid -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="blog-filter-bar">
+        @for (cat of categories; track cat) {
+          <button
+            class="filter-btn"
+            [class.active]="activeCategory() === cat"
+            (click)="setCategory(cat)">
+            {{ cat }}
+          </button>
+        }
+      </div>
+
+      <div class="blog-grid">
+        @for (post of filteredPosts; track post.slug) {
+          <a [routerLink]="['/blog', post.slug]" class="blog-card card-base" [reveal]>
+            <div class="blog-card-top">
+              <span class="blog-cat-chip" [style.background]="getCategoryColor(post.category) + '22'" [style.color]="getCategoryColor(post.category)">
+                {{ post.category }}
+              </span>
+              @if (post.featured) {
+                <span class="badge badge-primary">Featured</span>
+              }
+            </div>
+            <h3 class="blog-card-title">{{ post.title }}</h3>
+            <p class="blog-card-excerpt">{{ post.excerpt }}</p>
+            <div class="blog-card-footer">
+              <div class="blog-author">
+                <div class="author-avatar-sm">{{ post.authorAvatar }}</div>
+                <span>{{ post.author }}</span>
+              </div>
+              <div class="blog-meta">
+                <span>{{ post.date }}</span>
+                <span class="blog-meta-sep">·</span>
+                <span>{{ post.readTime }}</span>
+              </div>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / Newsletter -->
+  <section class="cta-section dark-section">
+    <div class="hero-mesh"></div>
+    <div class="container-xl" style="position:relative;z-index:1;">
+      <span class="section-label">Stay Updated</span>
+      <h2 class="section-title" style="color:white;">Get New Articles<br><span class="gradient-text">In Your Inbox</span></h2>
+      <p class="section-description" style="color:rgba(255,255,255,0.6);">
+        We publish deep technical articles every two weeks. No marketing, no fluff — just engineering content worth reading.
+      </p>
+      <div class="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="your@email.com" aria-label="Email address" />
+        <button class="btn btn-primary">Subscribe</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

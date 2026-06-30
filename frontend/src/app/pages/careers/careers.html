@@ -1,0 +1,129 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Page Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up">
+        <span class="section-label">Join the Team</span>
+        <h1 class="page-hero-title">
+          Build What Matters<br>
+          <span class="gradient-text">With Who Matters</span>
+        </h1>
+        <p class="page-hero-desc">
+          We're looking for engineers who care about craft, love hard problems, and want to build systems
+          that genuinely impact millions of people. If that sounds like you, we should talk.
+        </p>
+        <div class="hero-actions" style="margin-top:2rem;">
+          <a href="#open-positions" class="btn btn-primary btn-lg">View Open Positions</a>
+          <a href="#culture" class="btn btn-ghost btn-lg">Our Culture</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Culture Section -->
+  <section class="section" id="culture">
+    <div class="container-xl">
+      <div class="section-header-centered">
+        <span class="section-label">Why Specter</span>
+        <h2 class="section-title">Engineering Culture<br><span class="gradient-text">You'll Actually Love</span></h2>
+        <p class="section-description">
+          We've built a culture where engineers grow fast, own their work, and build things they're proud of.
+        </p>
+      </div>
+
+      <div class="values-grid">
+        @for (val of values; track val.title; let i = $index) {
+          <div class="value-card" [reveal] [revealDelay]="i * 75">
+            <div class="value-icon">{{ val.icon }}</div>
+            <h3 class="value-title">{{ val.title }}</h3>
+            <p class="value-desc">{{ val.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section dark-section" style="background:var(--bg-surface);">
+    <div class="container-xl">
+      <div class="section-header-centered">
+        <span class="section-label">Benefits</span>
+        <h2 class="section-title">Everything You Need<br><span class="gradient-text">to Do Your Best Work</span></h2>
+      </div>
+
+      <div class="benefits-grid">
+        @for (benefit of benefits; track benefit.title; let i = $index) {
+          <div class="benefit-card" [reveal] [revealDelay]="(i % 4) * 75">
+            <span class="benefit-icon">{{ benefit.icon }}</span>
+            <h3 class="benefit-title">{{ benefit.title }}</h3>
+            <p class="benefit-desc">{{ benefit.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Open Positions -->
+  <section class="section" id="open-positions">
+    <div class="container-xl">
+      <div class="section-header-centered">
+        <span class="section-label">Open Roles</span>
+        <h2 class="section-title">Join the Team</h2>
+      </div>
+
+      <!-- Department Filter -->
+      <div class="filter-bar" style="margin-bottom:2.5rem;">
+        @for (dept of departments; track dept) {
+          <button class="filter-btn" [class.active]="activeDepartment() === dept" (click)="setDepartment(dept)">
+            {{ dept }}
+          </button>
+        }
+      </div>
+
+      <div class="jobs-list">
+        @for (job of filteredJobs; track job.id) {
+          <a [routerLink]="['/careers', job.id]" class="job-card card-base">
+            <div class="job-card-left">
+              <h3 class="job-title">{{ job.title }}</h3>
+              <div class="job-meta">
+                <span class="chip">{{ job.department }}</span>
+                <span class="chip">{{ job.level }}</span>
+                <span class="job-location">📍 {{ job.location }}</span>
+                <span class="job-type-badge">{{ job.type }}</span>
+              </div>
+              <p class="job-desc">{{ job.description }}</p>
+              <div class="job-skills">
+                @for (skill of job.skills; track skill) {
+                  <span class="chip">{{ skill }}</span>
+                }
+              </div>
+            </div>
+            <div class="job-card-right">
+              <span class="job-posted">{{ job.posted }}</span>
+              <span class="job-apply-btn btn btn-outline">Apply →</span>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section dark-section">
+    <div class="hero-mesh"></div>
+    <div class="container-xl" style="position:relative;z-index:1;">
+      <span class="section-label">Don't see a fit?</span>
+      <h2 class="section-title" style="color:white;">Send Us Your<br><span class="gradient-text">Open Application</span></h2>
+      <p class="section-description" style="color:rgba(255,255,255,0.6);">
+        We're always looking for exceptional engineers. If you're talented, we'll find a place for you.
+      </p>
+      <a href="mailto:careers@spectertech.io" class="btn btn-primary btn-lg">Send Open Application</a>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

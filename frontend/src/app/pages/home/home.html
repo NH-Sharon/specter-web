@@ -1,0 +1,332 @@
+<app-navbar></app-navbar>
+
+<!-- ═══════════════════════════════════════════════
+     HERO — dark gradient background
+══════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-dots"></div>
+  <div class="container-xl">
+    <div class="hero-grid">
+
+      <div class="hero-text animate-fade-up">
+        <div class="hero-badge">{{ heroBadge() }}</div>
+        <h1 class="hero-headline">
+          {{ heroHeadline() }}
+          <span class="hero-hl">{{ heroHeadlineHighlight() }}</span>
+        </h1>
+        <p class="hero-sub">{{ heroSubtext() }}</p>
+        <div class="hero-ctas">
+          <a [routerLink]="heroCta1Link()" class="btn-white">{{ heroCta1Label() }}</a>
+          <a [routerLink]="heroCta2Link()" class="btn-white-outline">{{ heroCta2Label() }}</a>
+        </div>
+        <div class="hero-mini-stats">
+          @for (ms of heroMiniStats(); track ms.label; let last = $last) {
+            <div class="hms-item"><strong>{{ ms.value }}</strong><span>{{ ms.label }}</span></div>
+            @if (!last) { <div class="hms-sep"></div> }
+          }
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hv-center">
+          <div class="hv-hex">
+            <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" width="90" height="90">
+              <rect width="44" height="44" rx="10" fill="#0A52CC"/>
+              <rect width="44" height="44" rx="10" fill="url(#hg)" opacity="0.35"/>
+              <rect x="10" y="10" width="24" height="4.5" rx="2.25" fill="white"/>
+              <rect x="29.5" y="14.5" width="4.5" height="6" fill="white"/>
+              <rect x="10" y="20.5" width="24" height="4.5" rx="2.25" fill="white"/>
+              <rect x="10" y="25" width="4.5" height="6" fill="white"/>
+              <rect x="10" y="30" width="24" height="4.5" rx="2.25" fill="white"/>
+              <circle cx="10" cy="10" r="2" fill="#60A5FA" opacity="0.9"/>
+              <circle cx="34" cy="34.5" r="2" fill="#60A5FA" opacity="0.9"/>
+              <defs>
+                <linearGradient id="hg" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="white"/><stop offset="100%" stop-color="transparent"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="hv-tag">Specter Technologies</div>
+        </div>
+        <div class="hv-orbit hv-orbit-1">
+          <div class="hv-dot"></div>
+        </div>
+        <div class="hv-orbit hv-orbit-2">
+          <div class="hv-dot"></div>
+        </div>
+        <div class="hv-card hv-c1">
+          <span>☁️</span>
+          <div>
+            <b>Cloud Migration</b>
+            <small>AWS · Azure · GCP</small>
+          </div>
+        </div>
+        <div class="hv-card hv-c2">
+          <span>🤖</span>
+          <div>
+            <b>AI & GenAI</b>
+            <small>GPT · LLaMA · RAG</small>
+          </div>
+        </div>
+        <div class="hv-card hv-c3">
+          <span>📊</span>
+          <div>
+            <b>Data Analytics</b>
+            <small>Kafka · dbt · Spark</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TRUST BADGES
+══════════════════════════════════════════════════ -->
+<section class="trust-bar">
+  <div class="container-xl">
+    <p class="trust-label">Certified & Recognised By</p>
+    <div class="trust-row">
+      @for (b of trustBadges; track b.name) {
+        <div class="trust-item">
+          <span>{{ b.icon }}</span>
+          <span>{{ b.name }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     AT A GLANCE
+══════════════════════════════════════════════════ -->
+<section class="glance" id="stats-section">
+  <div class="container-xl">
+    <div class="bd-section-head" [reveal]>
+      <div class="bd-tag">Our Numbers</div>
+      <h2>At a <span>Glance</span></h2>
+      <p>A decade of engineering excellence measured in real outcomes</p>
+    </div>
+    <div class="glance-grid" [reveal]>
+      @for (stat of glanceStats; track stat.label) {
+        <div class="glance-card">
+          <div class="glance-icon">{{ stat.icon }}</div>
+          <div class="glance-number">{{ stat.display() }}<span>{{ stat.suffix }}</span></div>
+          <div class="glance-label">{{ stat.label }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SOLUTIONS — Pill tabs + cards
+══════════════════════════════════════════════════ -->
+<section class="solutions">
+  <div class="container-xl">
+    <div class="bd-section-head" [reveal]>
+      <div class="bd-tag">What We Offer</div>
+      <h2>Our Readymade <span>Solutions</span></h2>
+      <p>Enterprise-grade solutions across multiple technology domains</p>
+    </div>
+
+    <div class="sol-tabs" [reveal]>
+      @for (tab of solutionTabs; track tab.key) {
+        <button class="sol-tab" [class.active]="activeTab() === tab.key" (click)="setTab(tab.key)">
+          {{ tab.icon }} {{ tab.label }}
+        </button>
+      }
+    </div>
+
+    <div class="sol-cards">
+      @for (sol of currentSolutions(); track sol.title; let i = $index) {
+        <div class="sol-card" [reveal] [revealDelay]="i * 70">
+          <div class="sol-icon">{{ sol.icon }}</div>
+          <h3>{{ sol.title }}</h3>
+          <p>{{ sol.description }}</p>
+          <a [routerLink]="sol.path" class="sol-more">Learn More →</a>
+        </div>
+      }
+    </div>
+
+    <div class="section-cta" [reveal]>
+      <a routerLink="/solutions" class="btn-outline">View All Solutions</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     WHO WE ARE
+══════════════════════════════════════════════════ -->
+<section class="who">
+  <div class="container-xl">
+    <div class="who-grid">
+      <div class="who-text" [reveal]>
+        <div class="bd-tag">About Us</div>
+        <h2>Engineering The Future With <span>Cloud, Data & AI</span></h2>
+        <p>
+          Specter Technologies Ltd. is a premium software company headquartered in Dhaka, Bangladesh.
+          We architect and deliver cloud, AI, and data solutions that drive real business outcomes
+          for enterprises and governments across Asia, the Middle East, and Europe.
+        </p>
+        <ul class="who-list">
+          <li>✅ 7+ years delivering enterprise-grade solutions globally</li>
+          <li>✅ ISO 9001:2015 certified development processes</li>
+          <li>✅ 60+ in-house engineers, architects & data scientists</li>
+          <li>✅ Agile delivery with 2-week sprints and full transparency</li>
+          <li>✅ 12-month post-launch support on every project</li>
+        </ul>
+        <div class="who-ctas">
+          <a routerLink="/about" class="btn-primary">More About Us →</a>
+          <a routerLink="/contact" class="btn-outline">Free Consultation</a>
+        </div>
+      </div>
+      <div class="who-img-area" [reveal]>
+        <div class="who-img-box">
+          <div class="who-img-inner">🏢</div>
+          <div class="who-float wf-1">🏆 ISO Certified</div>
+          <div class="who-float wf-2">📈 98% Retention</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     INDUSTRIES
+══════════════════════════════════════════════════ -->
+<section class="industries">
+  <div class="container-xl">
+    <div class="bd-section-head" [reveal]>
+      <div class="bd-tag">Sector Expertise</div>
+      <h2>Industries <span>We Serve</span></h2>
+      <p>Deep domain knowledge across 12+ industry verticals worldwide</p>
+    </div>
+    <div class="ind-grid">
+      @for (ind of industryItems(); track ind.title; let i = $index) {
+        <div class="ind-card" [reveal] [revealDelay]="i * 35">
+          <div class="ind-icon">{{ ind.icon }}</div>
+          <div class="ind-name">{{ ind.title }}</div>
+          <div class="ind-sub">{{ ind.sub }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SERVICES — 6 cards
+══════════════════════════════════════════════════ -->
+<section class="services-bd">
+  <div class="container-xl">
+    <div class="bd-section-head" [reveal]>
+      <div class="bd-tag">Core Capabilities</div>
+      <h2>Our <span>Services</span></h2>
+      <p>End-to-end technology services to power your digital future</p>
+    </div>
+    <div class="svc-grid">
+      @for (svc of serviceItems(); track svc.title; let i = $index) {
+        <div class="svc-card" [reveal] [revealDelay]="i * 60">
+          <div class="svc-icon" [style.background]="svc.color + '18'">{{ svc.icon }}</div>
+          <h3>{{ svc.title }}</h3>
+          <p>{{ svc.description }}</p>
+          <a [routerLink]="svc.path" class="svc-more">Read More →</a>
+        </div>
+      }
+    </div>
+    <div class="section-cta" [reveal]>
+      <a routerLink="/services" class="btn-outline">All Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     HOW WE WORK
+══════════════════════════════════════════════════ -->
+<section class="process">
+  <div class="container-xl">
+    <div class="bd-section-head" [reveal]>
+      <div class="bd-tag">Our Methodology</div>
+      <h2>How We <span>Deliver</span></h2>
+      <p>A proven 5-step process ensuring on-time, on-budget delivery</p>
+    </div>
+    <div class="process-track">
+      @for (step of processItems(); track step.num; let i = $index) {
+        <div class="proc-step" [reveal] [revealDelay]="i * 70">
+          <div class="proc-num">{{ step.num }}</div>
+          <div class="proc-icon">{{ step.icon }}</div>
+          <h4>{{ step.title }}</h4>
+          <p>{{ step.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════════════════════ -->
+<section class="testimonials">
+  <div class="container-xl">
+    <div class="bd-section-head" [reveal]>
+      <div class="bd-tag">Client Reviews</div>
+      <h2>Customer <span>Testimonials</span></h2>
+      <p>What our global clients say about working with Specter Technologies</p>
+    </div>
+    <div class="testi-grid">
+      @for (t of testimonialItems(); track t.name; let i = $index) {
+        <div class="testi-card" [reveal] [revealDelay]="i * 80">
+          <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testi-quote">"{{ t.quote }}"</p>
+          <div class="testi-foot">
+            <div class="testi-av">{{ t.avatar }}</div>
+            <div>
+              <div class="testi-name">{{ t.name }} {{ t.country }}</div>
+              <div class="testi-role">{{ t.role }}, {{ t.company }}</div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     GLOBAL CLIENTS
+══════════════════════════════════════════════════ -->
+<section class="clients">
+  <div class="container-xl">
+    <div class="bd-section-head" [reveal]>
+      <div class="bd-tag">Trusted Worldwide</div>
+      <h2>Our <span>Global Clients</span></h2>
+      <p>Serving enterprises across government, finance, healthcare, and retail</p>
+    </div>
+    <div class="clients-grid" [reveal]>
+      @for (c of clientItems(); track c) {
+        <div class="client-box">{{ c }}</div>
+      }
+    </div>
+    <div class="section-cta" [reveal]>
+      <a routerLink="/portfolio" class="btn-outline">View Portfolio</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CTA BANNER
+══════════════════════════════════════════════════ -->
+<section class="cta-banner">
+  <div class="container-xl">
+    <div class="cta-inner" [reveal]>
+      <h2>{{ ctaHeadline() }}</h2>
+      <p>{{ ctaSubtext() }}</p>
+      <div class="cta-actions">
+        <a [routerLink]="ctaCta1Link()" class="btn-white">{{ ctaCta1Label() }}</a>
+        <a [routerLink]="ctaCta2Link()" class="btn-white-outline">{{ ctaCta2Label() }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

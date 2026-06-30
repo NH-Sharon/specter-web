@@ -1,0 +1,105 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content animate-fade-up">
+      <span class="section-label">What We Do</span>
+      <h1 class="page-hero-title">
+        End-to-End Technology <br>
+        <span class="gradient-text">Services</span>
+      </h1>
+      <p class="page-hero-desc">
+        From cloud migrations to AI integration, from platform engineering to cybersecurity —
+        we provide the full spectrum of technology services enterprises need to compete in the digital age.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="services-detail-grid">
+        @for (service of services; track service.slug; let i = $index) {
+          <div class="svc-card" [reveal] [revealDelay]="i * 60">
+            <div class="svc-header">
+              <div class="svc-icon" [style.background]="'rgba(' + hexToRgb(service.color) + ', 0.12)'" [style.color]="service.color">
+                {{ service.icon }}
+              </div>
+              <div>
+                <h2 class="svc-title">{{ service.title }}</h2>
+                <p class="svc-summary">{{ service.description }}</p>
+              </div>
+            </div>
+
+            <p class="svc-long-desc">{{ service.longDescription }}</p>
+
+            <div class="svc-benefits">
+              @for (benefit of service.benefits; track benefit) {
+                <div class="svc-benefit">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="8" fill="rgba(16,185,129,0.15)"/>
+                    <path d="M4.5 8L7 10.5L11.5 5.5" stroke="#10b981" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  {{ benefit }}
+                </div>
+              }
+            </div>
+
+            <div class="svc-tech-row">
+              @for (tech of service.technologies.slice(0, 5); track tech) {
+                <span class="chip">{{ tech }}</span>
+              }
+            </div>
+
+            <a [routerLink]="'/services/' + service.slug" class="svc-link">
+              Explore {{ service.title }}
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8H13M8 3L13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </a>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section bg-surface">
+    <div class="container-xl">
+      <div class="section-header-centered" [reveal]>
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">Common Questions</h2>
+      </div>
+      <div class="faq-grid">
+        @for (item of faqs; track item.q; let i = $index) {
+          <div class="faq-item" [reveal] [revealDelay]="i * 60">
+            <h3 class="faq-q">{{ item.q }}</h3>
+            <p class="faq-a">{{ item.a }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-bg"><div class="hero-mesh"></div></div>
+    <div class="container-xl">
+      <div class="cta-content" [reveal]>
+        <h2 class="cta-title">Not Sure Where to <span class="hero-gradient-text">Start?</span></h2>
+        <p class="cta-description">
+          Schedule a free 60-minute consultation with our solution architects. We'll assess your
+          current state and recommend the right path forward.
+        </p>
+        <div class="cta-actions">
+          <a routerLink="/contact" class="btn btn-primary btn-lg">Book a Free Consultation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

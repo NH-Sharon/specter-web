@@ -1,0 +1,144 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Post Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up">
+        <div class="post-hero-meta">
+          <span class="blog-cat-chip" [style.background]="getCategoryColor(postCategory()) + '22'" [style.color]="getCategoryColor(postCategory())">
+            {{ postCategory() }}
+          </span>
+          <span class="post-hero-date">{{ postDate() }}</span>
+          <span class="post-hero-sep">·</span>
+          <span class="post-hero-read">{{ postReadTime() }}</span>
+        </div>
+        <h1 class="page-hero-title" style="text-align:left;max-width:800px;">
+          {{ postTitle() }}
+        </h1>
+        <div class="post-hero-author">
+          <div class="author-avatar-lg">{{ postAuthorAvatar() }}</div>
+          <div>
+            <div class="author-name-lg">{{ postAuthor() }}</div>
+            <div class="author-role-lg">{{ postAuthorRole() }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Area -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="post-layout">
+        <!-- Sidebar -->
+        <aside class="post-sidebar">
+          <div class="toc-card card-base">
+            <h4 class="toc-title">Table of Contents</h4>
+            <nav class="toc-nav">
+              @for (item of tableOfContents; track item.id) {
+                <a [href]="'#' + item.id" class="toc-link">{{ item.label }}</a>
+              }
+            </nav>
+          </div>
+
+          <div class="share-card card-base">
+            <h4 class="toc-title">Share</h4>
+            <div class="share-actions">
+              <button class="share-btn">𝕏 Twitter</button>
+              <button class="share-btn">in LinkedIn</button>
+              <button class="share-btn">🔗 Copy Link</button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <article class="post-content">
+          <section id="intro">
+            <p class="post-lead">
+              Retrieval-Augmented Generation (RAG) has moved from academic curiosity to production necessity in enterprise AI. But most teams hit the same wall: building a prototype RAG system that demos well is easy; building one that reliably handles millions of documents in production is hard.
+            </p>
+            <p>
+              In this article, I'll walk through the architecture we've settled on after deploying RAG systems for three major enterprise clients — a financial institution, a government agency, and a healthcare network. Each had different requirements, but the core patterns held.
+            </p>
+          </section>
+
+          <section id="architecture">
+            <h2>Architecture Overview</h2>
+            <p>
+              A production RAG system has five main components: the ingestion pipeline, the embedding service, the vector store, the retrieval layer, and the generation layer. Each has failure modes that will bite you in production if you don't design for them.
+            </p>
+            <div class="post-callout">
+              <strong>Key insight:</strong> The bottleneck in most RAG systems isn't generation — it's retrieval quality. If you retrieve the wrong documents, the best LLM in the world gives you bad answers. Invest heavily in retrieval.
+            </div>
+          </section>
+
+          <section id="ingestion">
+            <h2>Document Ingestion Pipeline</h2>
+            <p>
+              We use a multi-stage ingestion pipeline built on Apache Airflow for orchestration. Documents flow through extraction (PDF, DOCX, HTML), chunking, enrichment, embedding, and finally upsert to PGVector.
+            </p>
+            <p>
+              The critical decision is chunking strategy. Naive fixed-size chunking destroys semantic coherence across thousands of document types. We use a hierarchical chunking approach: section-level chunks for retrieval, paragraph-level chunks for context, and sentence-level chunks for precision.
+            </p>
+          </section>
+
+          <section id="embeddings">
+            <h2>Embedding Strategy</h2>
+            <p>
+              We standardized on OpenAI's text-embedding-3-large for most production deployments, with local alternatives (BGE-M3) for air-gapped government environments. Embedding dimensions matter — 1536d gives you accuracy, but you pay for it in storage and query latency.
+            </p>
+          </section>
+
+          <section id="retrieval">
+            <h2>Retrieval and Reranking</h2>
+            <p>
+              Vanilla vector similarity search isn't enough for enterprise accuracy requirements. We layer three retrieval strategies: dense retrieval (cosine similarity on embeddings), sparse retrieval (BM25 on raw text), and a cross-encoder reranker that rescores the top-50 candidates.
+            </p>
+          </section>
+
+          <section id="production">
+            <h2>Production Considerations</h2>
+            <p>
+              Observability is non-negotiable. You need to know — in real time — what queries are being made, which documents are being retrieved, what the LLM is generating, and where the pipeline is failing. We instrument every stage with OpenTelemetry and export to Grafana Tempo.
+            </p>
+          </section>
+
+          <section id="conclusion">
+            <h2>Conclusion</h2>
+            <p>
+              Production-grade RAG is an engineering discipline, not just a prompt engineering exercise. The teams that get it right invest in ingestion quality, retrieval precision, and observability — not just the generation model.
+            </p>
+            <p>
+              If you're building an enterprise RAG system and running into scaling challenges, we'd love to share our experience. Reach out via the contact page or connect with me on LinkedIn.
+            </p>
+          </section>
+        </article>
+      </div>
+
+      <!-- Related Posts -->
+      <div class="related-posts">
+        <h3 class="related-title">Related Articles</h3>
+        <div class="related-grid">
+          @for (post of relatedPosts; track post.slug) {
+            <a [routerLink]="['/blog', post.slug]" class="related-card card-base">
+              <span class="blog-cat-chip" [style.background]="getCategoryColor(post.category) + '22'" [style.color]="getCategoryColor(post.category)">
+                {{ post.category }}
+              </span>
+              <h4 class="related-card-title">{{ post.title }}</h4>
+              <div class="blog-meta">
+                <span>{{ post.date }}</span>
+                <span class="blog-meta-sep">·</span>
+                <span>{{ post.readTime }}</span>
+              </div>
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

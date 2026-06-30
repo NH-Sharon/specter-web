@@ -1,0 +1,175 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Page Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="page-hero-text animate-fade-up">
+        <span class="section-label">About Specter Technologies</span>
+        <h1 class="page-hero-title">
+          Engineering Excellence,<br>
+          <span class="gradient-text">Global Impact</span>
+        </h1>
+        <p class="page-hero-desc">
+          We are a premium technology company built by engineers, for enterprises. Since 2017, we've been
+          helping organizations across the globe navigate complex digital transformations with confidence, precision, and innovation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="mission-grid">
+        <div class="mission-card" [reveal]>
+          <div class="mission-icon">🎯</div>
+          <h2 class="mission-title">Our Mission</h2>
+          <p class="mission-text">
+            To help organizations accelerate digital transformation using modern software engineering,
+            cloud computing, DevOps, artificial intelligence, cybersecurity, and data engineering.
+            We deliver solutions that create lasting competitive advantage and measurable business value.
+          </p>
+        </div>
+        <div class="mission-card" [reveal] [revealDelay]="150">
+          <div class="mission-icon">🔭</div>
+          <h2 class="mission-title">Our Vision</h2>
+          <p class="mission-text">
+            To become one of the world's most trusted technology companies by delivering innovative,
+            secure, scalable, and intelligent digital solutions. We aspire to set the global standard
+            for technology excellence, particularly for organizations in emerging markets.
+          </p>
+        </div>
+        <div class="mission-card" [reveal] [revealDelay]="300">
+          <div class="mission-icon">💎</div>
+          <h2 class="mission-title">Our Approach</h2>
+          <p class="mission-text">
+            We combine deep technical expertise with strategic thinking, embedding ourselves as true
+            partners in your transformation journey. From architecture to deployment, from security
+            to observability — we own the entire technology lifecycle.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Banner -->
+  <section class="about-stats-section dark-section section-sm">
+    <div class="container-xl about-stats">
+      @for (stat of [{v:'150+',l:'Enterprise Clients'},{v:'500+',l:'Projects Delivered'},{v:'15+',l:'Countries'},{v:'8+',l:'Years'},{v:'150+',l:'Engineers'},{v:'99.9%',l:'Uptime SLA'}]; track stat.l) {
+        <div class="about-stat" [reveal]>
+          <div class="about-stat-value gradient-text">{{ stat.v }}</div>
+          <div class="about-stat-label">{{ stat.l }}</div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Our Values -->
+  <section class="section bg-surface">
+    <div class="container-xl">
+      <div class="section-header-centered" [reveal]>
+        <span class="section-label">Our DNA</span>
+        <h2 class="section-title">What We Believe In</h2>
+        <p class="section-description" style="margin: 1rem auto 0;">
+          Six core values that guide every decision, every architecture, and every line of code we write.
+        </p>
+      </div>
+      <div class="values-grid">
+        @for (value of values; track value.title; let i = $index) {
+          <div class="value-card" [reveal] [revealDelay]="i * 80">
+            <div class="value-icon">{{ value.icon }}</div>
+            <h3 class="value-title">{{ value.title }}</h3>
+            <p class="value-desc">{{ value.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="section-header-centered" [reveal]>
+        <span class="section-label">Our Journey</span>
+        <h2 class="section-title">Building Since 2017</h2>
+      </div>
+      <div class="timeline">
+        @for (milestone of milestones; track milestone.year; let i = $index) {
+          <div class="timeline-item" [class.timeline-right]="i % 2 === 1" [reveal] [revealDelay]="i * 80">
+            <div class="timeline-year">{{ milestone.year }}</div>
+            <div class="timeline-content">
+              <div class="timeline-event">{{ milestone.event }}</div>
+              <p class="timeline-desc">{{ milestone.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="section dark-section">
+    <div class="hero-mesh"></div>
+    <div class="container-xl" style="position:relative;z-index:1">
+      <div class="section-header-centered" [reveal]>
+        <span class="section-label">Leadership</span>
+        <h2 class="section-title" style="color:white">Meet the Team</h2>
+        <p class="section-description" style="margin:1rem auto 0;">
+          Senior engineers and strategists with decades of combined enterprise experience.
+        </p>
+      </div>
+      <div class="team-grid">
+        @for (member of team; track member.name; let i = $index) {
+          <div class="team-card" [reveal] [revealDelay]="i * 80">
+            <div class="team-avatar">{{ member.avatar }}</div>
+            <h3 class="team-name">{{ member.name }}</h3>
+            <p class="team-role">{{ member.role }}</p>
+            <p class="team-expertise">{{ member.expertise }}</p>
+            <span class="chip chip-dark">{{ member.years }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="section-header-centered" [reveal]>
+        <span class="section-label">Recognition</span>
+        <h2 class="section-title">Certifications & Partnerships</h2>
+      </div>
+      <div class="certs-grid">
+        @for (cert of certifications; track cert.name; let i = $index) {
+          <div class="cert-card" [reveal] [revealDelay]="i * 80">
+            <div class="cert-icon">{{ cert.icon }}</div>
+            <p class="cert-name">{{ cert.name }}</p>
+            <span class="badge badge-primary">{{ cert.type }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-bg"><div class="hero-mesh"></div></div>
+    <div class="container-xl">
+      <div class="cta-content" [reveal]>
+        <h2 class="cta-title">Ready to Work <span class="hero-gradient-text">Together?</span></h2>
+        <p class="cta-description">
+          Let's discuss how Specter Technologies can accelerate your digital transformation.
+        </p>
+        <div class="cta-actions">
+          <a routerLink="/contact" class="btn btn-primary btn-lg">Start a Conversation</a>
+          <a routerLink="/portfolio" class="btn btn-ghost btn-lg">View Our Work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

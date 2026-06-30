@@ -1,0 +1,27 @@
+version: '3.9'
+
+# Development overrides
+services:
+
+  postgres:
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: specterdb_dev
+      POSTGRES_USER: specter
+      POSTGRES_PASSWORD: devpassword123
+
+  backend:
+    build:
+      context: ./backend
+      target: development
+    environment:
+      SPRING_PROFILES_ACTIVE: development
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/specterdb_dev
+      SPRING_JPA_SHOW_SQL: "true"
+      LOGGING_LEVEL_ROOT: INFO
+    volumes:
+      - ./backend/src:/app/src
+    ports:
+      - "8080:8080"
+      - "5005:5005"  # Remote debug port

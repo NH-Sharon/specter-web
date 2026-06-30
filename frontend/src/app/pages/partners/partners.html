@@ -1,0 +1,146 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Page Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up">
+        <span class="section-label">Partners</span>
+        <h1 class="page-hero-title">
+          Stronger Together<br>
+          <span class="gradient-text">With the Best Partners</span>
+        </h1>
+        <p class="page-hero-desc">
+          We partner with the world's leading cloud, technology, and implementation partners to deliver
+          best-in-class solutions backed by the deepest expertise available.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cloud Partners -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="section-header-centered">
+        <span class="section-label">Cloud Partners</span>
+        <h2 class="section-title">Certified Cloud<br><span class="gradient-text">Partnerships</span></h2>
+      </div>
+      <div class="partners-grid">
+        @for (p of cloudPartners; track p.name; let i = $index) {
+          <div class="partner-card card-base" [reveal] [revealDelay]="i * 100">
+            <div class="partner-icon">{{ p.icon }}</div>
+            <h3 class="partner-name">{{ p.name }}</h3>
+            <span class="badge badge-primary">{{ p.tier }}</span>
+            <p class="partner-desc">{{ p.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology Partners -->
+  <section class="section" style="background:var(--bg-surface);">
+    <div class="container-xl">
+      <div class="section-header-centered">
+        <span class="section-label">Technology Partners</span>
+        <h2 class="section-title">Technology<br><span class="gradient-text">Ecosystem</span></h2>
+      </div>
+      <div class="partners-grid partners-grid-3">
+        @for (p of techPartners; track p.name; let i = $index) {
+          <div class="partner-card card-base" [reveal] [revealDelay]="(i % 3) * 100">
+            <div class="partner-icon">{{ p.icon }}</div>
+            <h3 class="partner-name">{{ p.name }}</h3>
+            <span class="chip">{{ p.tier }}</span>
+            <p class="partner-desc">{{ p.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Implementation Partners -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="section-header-centered">
+        <span class="section-label">Implementation Partners</span>
+        <h2 class="section-title">Strategic<br><span class="gradient-text">Alliances</span></h2>
+      </div>
+      <div class="partners-grid">
+        @for (p of implementationPartners; track p.name; let i = $index) {
+          <div class="partner-card card-base" [reveal] [revealDelay]="i * 100">
+            <div class="partner-icon">{{ p.icon }}</div>
+            <h3 class="partner-name">{{ p.name }}</h3>
+            <span class="chip">{{ p.tier }}</span>
+            <p class="partner-desc">{{ p.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Partner Tiers -->
+  <section class="section dark-section" style="background:var(--bg-surface);">
+    <div class="container-xl">
+      <div class="section-header-centered">
+        <span class="section-label">Partner Program</span>
+        <h2 class="section-title">Partner Tiers &<br><span class="gradient-text">Benefits</span></h2>
+      </div>
+      <div class="tiers-grid">
+        @for (tier of partnerTiers; track tier.name; let i = $index) {
+          <div class="tier-card card-base" [reveal] [revealDelay]="i * 100">
+            <div class="tier-icon">{{ tier.icon }}</div>
+            <h3 class="tier-name" [style.color]="tier.color">{{ tier.name }}</h3>
+            <p class="tier-desc">{{ tier.description }}</p>
+            <ul class="tier-perks">
+              @for (perk of tier.perks; track perk) {
+                <li>
+                  <span class="perk-dot" [style.background]="tier.color"></span>
+                  {{ perk }}
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Program Benefits -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="section-header-centered">
+        <span class="section-label">Why Partner With Us</span>
+        <h2 class="section-title">What's In It<br><span class="gradient-text">For You</span></h2>
+      </div>
+      <div class="benefits-grid-6">
+        @for (b of programBenefits; track b.title; let i = $index) {
+          <div class="benefit-card card-base" [reveal] [revealDelay]="(i % 3) * 100">
+            <span class="benefit-icon-lg">{{ b.icon }}</span>
+            <h3 class="benefit-title">{{ b.title }}</h3>
+            <p class="benefit-desc">{{ b.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section dark-section">
+    <div class="hero-mesh"></div>
+    <div class="container-xl" style="position:relative;z-index:1;">
+      <span class="section-label">Become a Partner</span>
+      <h2 class="section-title" style="color:white;">Ready to Grow<br><span class="gradient-text">Together?</span></h2>
+      <p class="section-description" style="color:rgba(255,255,255,0.6);">
+        Apply for our partner program and a dedicated partner manager will reach out within 3 business days.
+      </p>
+      <div class="cta-actions">
+        <a routerLink="/contact" class="btn btn-primary btn-lg">Apply to Partner Program</a>
+        <a href="mailto:partners@spectertech.io" class="btn btn-outline btn-lg">Email Partner Team</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

@@ -1,0 +1,396 @@
+<div class="content-editor">
+  <div class="page-header">
+    <h1>Site Content</h1>
+    <p>Edit all sections of your website. Changes are saved to the database and appear on the website immediately.</p>
+  </div>
+
+  @if (success()) { <div class="alert-success">{{ success() }}</div> }
+  @if (error()) { <div class="alert-error">{{ error() }}</div> }
+
+  <div class="editor-layout">
+    <!-- Section list sidebar -->
+    <div class="section-list">
+      @for (section of sections; track section.key) {
+        <button class="section-item" [class.active]="activeKey() === section.key" (click)="selectSection(section.key)">
+          <span class="section-icon">{{ section.icon }}</span>
+          <span class="section-label">{{ section.label }}</span>
+        </button>
+      }
+    </div>
+
+    <!-- Form area -->
+    <div class="form-area">
+      <div class="form-area-header">
+        <div>
+          <h2>{{ activeSection().icon }} {{ activeSection().label }}</h2>
+          <p>Changes will appear on the website after saving.</p>
+        </div>
+        <button class="btn-save" (click)="save()" [disabled]="saving() || loading()">
+          {{ saving() ? 'Saving...' : '💾 Save Changes' }}
+        </button>
+      </div>
+
+      @if (loading()) {
+        <div class="loading-state">Loading content...</div>
+      } @else {
+        @switch (activeKey()) {
+
+          @case ('hero') {
+            <div class="form-group">
+              <label>Badge Text</label>
+              <input [ngModel]="data().badge" (ngModelChange)="updateField('badge', $event)" placeholder="🏆 Badge text..."/>
+            </div>
+            <div class="form-group">
+              <label>Main Headline</label>
+              <input [ngModel]="data().headline" (ngModelChange)="updateField('headline', $event)" placeholder="Best Technology Partner For Your"/>
+            </div>
+            <div class="form-group">
+              <label>Highlighted Word</label>
+              <input [ngModel]="data().headlineHighlight" (ngModelChange)="updateField('headlineHighlight', $event)" placeholder="Digital Transformation"/>
+              <small>This part shows in blue colour in the headline</small>
+            </div>
+            <div class="form-group">
+              <label>Sub-text</label>
+              <textarea rows="3" [ngModel]="data().subtext" (ngModelChange)="updateField('subtext', $event)" placeholder="Describe your company..."></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Button 1 Text</label>
+                <input [ngModel]="data().cta1Label" (ngModelChange)="updateField('cta1Label', $event)" placeholder="Contact Us"/>
+              </div>
+              <div class="form-group">
+                <label>Button 1 Link</label>
+                <input [ngModel]="data().cta1Link" (ngModelChange)="updateField('cta1Link', $event)" placeholder="/contact"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Button 2 Text</label>
+                <input [ngModel]="data().cta2Label" (ngModelChange)="updateField('cta2Label', $event)" placeholder="View Our Work"/>
+              </div>
+              <div class="form-group">
+                <label>Button 2 Link</label>
+                <input [ngModel]="data().cta2Link" (ngModelChange)="updateField('cta2Link', $event)" placeholder="/portfolio"/>
+              </div>
+            </div>
+            <div class="sub-section">
+              <div class="sub-header">
+                <h4>Mini Stats Bar</h4>
+                <button class="btn-add-item" (click)="addMiniStat()">+ Add</button>
+              </div>
+              @for (stat of (data().miniStats || []); track $index; let i = $index) {
+                <div class="list-item">
+                  <input placeholder="150+" [ngModel]="stat.value" (ngModelChange)="updateListItem('miniStats', i, 'value', $event)"/>
+                  <input placeholder="Projects" [ngModel]="stat.label" (ngModelChange)="updateListItem('miniStats', i, 'label', $event)"/>
+                  <button class="btn-remove" (click)="removeMiniStat(i)">✕</button>
+                </div>
+              }
+            </div>
+          }
+
+          @case ('stats') {
+            @for (stat of (data().items || []); track $index; let i = $index) {
+              <div class="list-card">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Icon</label>
+                    <input [ngModel]="stat.icon" (ngModelChange)="updateListItem('items', i, 'icon', $event)" style="width:80px"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Value</label>
+                    <input type="number" [ngModel]="stat.value" (ngModelChange)="updateListItem('items', i, 'value', +$event)"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Suffix</label>
+                    <input [ngModel]="stat.suffix" (ngModelChange)="updateListItem('items', i, 'suffix', $event)" style="width:60px"/>
+                  </div>
+                  <div class="form-group" style="flex:2">
+                    <label>Label</label>
+                    <input [ngModel]="stat.label" (ngModelChange)="updateListItem('items', i, 'label', $event)"/>
+                  </div>
+                  <button class="btn-remove-card" (click)="removeStatItem(i)" style="align-self:flex-end;margin-bottom:16px">🗑️</button>
+                </div>
+              </div>
+            }
+            <button class="btn-add-item" (click)="addStatItem()">+ Add Stat</button>
+          }
+
+          @case ('services') {
+            @for (svc of (data().items || []); track $index; let i = $index) {
+              <div class="list-card">
+                <div class="card-drag-handle">Service {{ i + 1 }}</div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Icon</label>
+                    <input [ngModel]="svc.icon" (ngModelChange)="updateListItem('items', i, 'icon', $event)" style="width:70px"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Color</label>
+                    <input type="color" [ngModel]="svc.color" (ngModelChange)="updateListItem('items', i, 'color', $event)" style="width:70px;padding:2px"/>
+                  </div>
+                  <div class="form-group" style="flex:3">
+                    <label>Title</label>
+                    <input [ngModel]="svc.title" (ngModelChange)="updateListItem('items', i, 'title', $event)"/>
+                  </div>
+                  <button class="btn-remove-card" (click)="removeService(i)" style="align-self:flex-end;margin-bottom:16px">🗑️</button>
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea rows="2" [ngModel]="svc.description" (ngModelChange)="updateListItem('items', i, 'description', $event)"></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Link Path</label>
+                  <input [ngModel]="svc.path" (ngModelChange)="updateListItem('items', i, 'path', $event)"/>
+                </div>
+              </div>
+            }
+            <button class="btn-add-item" (click)="addService()">+ Add Service</button>
+          }
+
+          @case ('testimonials') {
+            @for (t of (data().items || []); track $index; let i = $index) {
+              <div class="list-card">
+                <div class="card-drag-handle">
+                  Testimonial {{ i + 1 }}
+                  <button class="btn-remove-card" (click)="removeTestimonial(i)">🗑️</button>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input [ngModel]="t.name" (ngModelChange)="updateListItem('items', i, 'name', $event)"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Role</label>
+                    <input [ngModel]="t.role" (ngModelChange)="updateListItem('items', i, 'role', $event)"/>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Company</label>
+                    <input [ngModel]="t.company" (ngModelChange)="updateListItem('items', i, 'company', $event)"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Country Flag</label>
+                    <input [ngModel]="t.country" (ngModelChange)="updateListItem('items', i, 'country', $event)" style="width:80px"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Quote</label>
+                  <textarea rows="3" [ngModel]="t.quote" (ngModelChange)="updateListItem('items', i, 'quote', $event)"></textarea>
+                </div>
+              </div>
+            }
+            <button class="btn-add-item" (click)="addTestimonial()">+ Add Testimonial</button>
+          }
+
+          @case ('clients') {
+            <div class="form-group">
+              <label>Client Names (one per line)</label>
+              <textarea rows="12" [ngModel]="clientsText" (ngModelChange)="clientsText = $event" style="font-family:monospace"></textarea>
+              <small>Each line = one client name shown on the website</small>
+            </div>
+            <div class="clients-preview">
+              @for (c of (data().items || []); track c) {
+                <span class="client-chip">{{ c }}</span>
+              }
+            </div>
+          }
+
+          @case ('about') {
+            <div class="form-group">
+              <label>Title</label>
+              <input [ngModel]="data().title" (ngModelChange)="updateField('title', $event)"/>
+            </div>
+            <div class="form-group">
+              <label>Highlighted Part</label>
+              <input [ngModel]="data().titleHighlight" (ngModelChange)="updateField('titleHighlight', $event)"/>
+            </div>
+            <div class="form-group">
+              <label>Description Text</label>
+              <textarea rows="4" [ngModel]="data().text" (ngModelChange)="updateField('text', $event)"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Bullet Points (one per line)</label>
+              <textarea rows="6" [ngModel]="highlightsText" (ngModelChange)="highlightsText = $event"></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Button 1 Text</label>
+                <input [ngModel]="data().cta1Label" (ngModelChange)="updateField('cta1Label', $event)"/>
+              </div>
+              <div class="form-group">
+                <label>Button 1 Link</label>
+                <input [ngModel]="data().cta1Link" (ngModelChange)="updateField('cta1Link', $event)"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Button 2 Text</label>
+                <input [ngModel]="data().cta2Label" (ngModelChange)="updateField('cta2Label', $event)"/>
+              </div>
+              <div class="form-group">
+                <label>Button 2 Link</label>
+                <input [ngModel]="data().cta2Link" (ngModelChange)="updateField('cta2Link', $event)"/>
+              </div>
+            </div>
+          }
+
+          @case ('industries') {
+            <div class="industries-grid">
+              @for (ind of (data().items || []); track $index; let i = $index) {
+                <div class="ind-edit-card">
+                  <button class="btn-remove-card-sm" (click)="removeIndustry(i)">✕</button>
+                  <input class="icon-input" [ngModel]="ind.icon" (ngModelChange)="updateListItem('items', i, 'icon', $event)" placeholder="🏛️"/>
+                  <input [ngModel]="ind.title" (ngModelChange)="updateListItem('items', i, 'title', $event)" placeholder="Industry"/>
+                  <input [ngModel]="ind.sub" (ngModelChange)="updateListItem('items', i, 'sub', $event)" placeholder="& Sub-sector"/>
+                </div>
+              }
+            </div>
+            <button class="btn-add-item" (click)="addIndustry()">+ Add Industry</button>
+          }
+
+          @case ('process') {
+            @for (step of (data().items || []); track $index; let i = $index) {
+              <div class="list-card">
+                <div class="card-drag-handle">
+                  Step {{ step.num }}
+                  <button class="btn-remove-card" (click)="removeProcessStep(i)">🗑️</button>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Number</label>
+                    <input [ngModel]="step.num" (ngModelChange)="updateListItem('items', i, 'num', $event)" style="width:60px"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Icon</label>
+                    <input [ngModel]="step.icon" (ngModelChange)="updateListItem('items', i, 'icon', $event)" style="width:70px"/>
+                  </div>
+                  <div class="form-group" style="flex:3">
+                    <label>Title</label>
+                    <input [ngModel]="step.title" (ngModelChange)="updateListItem('items', i, 'title', $event)"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea rows="2" [ngModel]="step.desc" (ngModelChange)="updateListItem('items', i, 'desc', $event)"></textarea>
+                </div>
+              </div>
+            }
+            <button class="btn-add-item" (click)="addProcessStep()">+ Add Step</button>
+          }
+
+          @case ('cta_banner') {
+            <div class="form-group">
+              <label>Headline</label>
+              <input [ngModel]="data().headline" (ngModelChange)="updateField('headline', $event)"/>
+            </div>
+            <div class="form-group">
+              <label>Sub-text</label>
+              <textarea rows="2" [ngModel]="data().subtext" (ngModelChange)="updateField('subtext', $event)"></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Button 1 Text</label>
+                <input [ngModel]="data().cta1Label" (ngModelChange)="updateField('cta1Label', $event)"/>
+              </div>
+              <div class="form-group">
+                <label>Button 1 Link</label>
+                <input [ngModel]="data().cta1Link" (ngModelChange)="updateField('cta1Link', $event)"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Button 2 Text</label>
+                <input [ngModel]="data().cta2Label" (ngModelChange)="updateField('cta2Label', $event)"/>
+              </div>
+              <div class="form-group">
+                <label>Button 2 Link</label>
+                <input [ngModel]="data().cta2Link" (ngModelChange)="updateField('cta2Link', $event)"/>
+              </div>
+            </div>
+          }
+
+          @case ('contact_info') {
+            <div class="sub-section">
+              <h4>Offices</h4>
+              @for (office of (data().offices || []); track $index; let i = $index) {
+                <div class="list-card">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label>City</label>
+                      <input [ngModel]="office.city" (ngModelChange)="updateListItem('offices', i, 'city', $event)"/>
+                    </div>
+                    <div class="form-group">
+                      <label>Country</label>
+                      <input [ngModel]="office.country" (ngModelChange)="updateListItem('offices', i, 'country', $event)"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Full Address</label>
+                    <input [ngModel]="office.address" (ngModelChange)="updateListItem('offices', i, 'address', $event)"/>
+                  </div>
+                </div>
+              }
+            </div>
+            <div class="form-group">
+              <label>Email Addresses (one per line)</label>
+              <textarea rows="3" [ngModel]="joinArray(data().emails)" (ngModelChange)="setEmailsFromText($event)"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Phone Numbers (one per line)</label>
+              <textarea rows="3" [ngModel]="joinArray(data().phones)" (ngModelChange)="setPhonesFromText($event)"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Working Hours</label>
+              <input [ngModel]="data().workingHours" (ngModelChange)="updateField('workingHours', $event)"/>
+            </div>
+          }
+
+          @case ('company_info') {
+            <div class="form-row">
+              <div class="form-group">
+                <label>Company Name</label>
+                <input [ngModel]="data().name" (ngModelChange)="updateField('name', $event)"/>
+              </div>
+              <div class="form-group">
+                <label>Founded Year</label>
+                <input [ngModel]="data().founded" (ngModelChange)="updateField('founded', $event)"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Tagline</label>
+              <input [ngModel]="data().tagline" (ngModelChange)="updateField('tagline', $event)"/>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Employees</label>
+                <input [ngModel]="data().employees" (ngModelChange)="updateField('employees', $event)"/>
+              </div>
+              <div class="form-group">
+                <label>Headquarters</label>
+                <input [ngModel]="data().headquarters" (ngModelChange)="updateField('headquarters', $event)"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>LinkedIn URL</label>
+              <input [ngModel]="data().linkedIn" (ngModelChange)="updateField('linkedIn', $event)"/>
+            </div>
+            <div class="form-group">
+              <label>Facebook URL</label>
+              <input [ngModel]="data().facebook" (ngModelChange)="updateField('facebook', $event)"/>
+            </div>
+            <div class="form-group">
+              <label>GitHub URL</label>
+              <input [ngModel]="data().github" (ngModelChange)="updateField('github', $event)"/>
+            </div>
+          }
+
+          @default {
+            <div class="loading-state">Select a section from the sidebar to edit its content.</div>
+          }
+
+        }
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,150 @@
+.faq-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 3rem;
+  align-items: start;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+/* Categories */
+.faq-categories {
+  position: sticky;
+  top: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  @media (max-width: 900px) {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.faq-cat-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-align: left;
+  transition: all 0.2s;
+
+  &:hover { background: var(--bg-card); color: var(--text-primary); }
+
+  &.active {
+    background: rgba(79,110,247,0.1);
+    border-color: rgba(79,110,247,0.25);
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+}
+
+.faq-cat-icon { font-size: 1.125rem; }
+
+/* FAQ Items */
+.faq-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--bg-border);
+
+  &:first-child { border-top: 1px solid var(--bg-border); }
+
+  &.open .faq-question { color: var(--color-primary); }
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.25rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: color 0.2s;
+
+  &:hover { color: var(--color-primary); }
+}
+
+.faq-toggle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--color-primary);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.faq-answer {
+  padding: 0 0 1.25rem;
+
+  p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+}
+
+/* Contact Card */
+.faq-contact-card {
+  border-radius: 20px;
+  padding: 3.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: 560px) { padding: 2rem 1.5rem; }
+}
+
+.faq-contact-content {
+  position: relative;
+  z-index: 1;
+}
+
+.faq-contact-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.03em;
+  margin: 0.5rem 0;
+}
+
+.faq-contact-desc {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 1.75rem;
+  max-width: 45ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Reuse faq-list for service detail page */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+}

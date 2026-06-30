@@ -1,0 +1,54 @@
+<app-navbar></app-navbar>
+
+<main>
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content animate-fade-up">
+      <span class="section-label">Our Stack</span>
+      <h1 class="page-hero-title">Technology <span class="gradient-text">Expertise</span></h1>
+      <p class="page-hero-desc">
+        80+ technologies mastered across frontend, backend, cloud, data, AI, and security.
+        We stay ahead of the curve so you don't have to.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-xl">
+      @for (cat of categories; track cat.name; let i = $index) {
+        <div class="tech-category" [reveal] [revealDelay]="i * 50">
+          <div class="cat-header">
+            <span class="cat-icon">{{ cat.icon }}</span>
+            <div>
+              <h2 class="cat-name">{{ cat.name }}</h2>
+              <p class="cat-desc">{{ cat.description }}</p>
+            </div>
+          </div>
+          <div class="cat-tech-grid">
+            @for (tech of cat.technologies; track tech.name) {
+              <div class="tech-pill">
+                <span class="tech-pill-icon">{{ tech.icon }}</span>
+                <span class="tech-pill-name">{{ tech.name }}</span>
+                <span class="tech-pill-level" [style.color]="getLevelColor(tech.level)">{{ tech.level }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-bg"><div class="hero-mesh"></div></div>
+    <div class="container-xl">
+      <div class="cta-content" [reveal]>
+        <h2 class="cta-title">Need a <span class="hero-gradient-text">Specific Technology?</span></h2>
+        <p class="cta-description">Our team has broad experience across the technology ecosystem. If you don't see a technology listed, reach out — we likely have expertise in it.</p>
+        <a routerLink="/contact" class="btn btn-primary btn-lg">Talk to an Architect</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

@@ -1,0 +1,89 @@
+<div class="edit-page">
+  <div class="edit-header">
+    <a routerLink="/admin/portfolio" class="back-btn">← Back</a>
+    <h1>{{ isEdit ? 'Edit Project' : 'New Portfolio Project' }}</h1>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-box">Loading...</div>
+  } @else {
+    @if (error()) { <div class="alert-error">{{ error() }}</div> }
+    @if (success()) { <div class="alert-success">{{ success() }}</div> }
+
+    <div class="edit-grid">
+      <div class="edit-main">
+        <div class="form-card">
+          <div class="form-group">
+            <label>Project Title *</label>
+            <input [(ngModel)]="form.title" placeholder="Enter project title..." />
+          </div>
+          <div class="form-group">
+            <label>Client Name</label>
+            <input [(ngModel)]="form.client" placeholder="Client company name..." />
+          </div>
+          <div class="form-group">
+            <label>Description *</label>
+            <textarea [(ngModel)]="form.description" rows="6" placeholder="Describe the project, challenges, and solutions..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Technologies Used (comma separated)</label>
+            <input [(ngModel)]="form.technologies" placeholder="AWS, React, PostgreSQL, Docker..." />
+          </div>
+          <div class="form-group">
+            <label>Key Metrics / Results</label>
+            <textarea [(ngModel)]="form.metrics" rows="4" placeholder="e.g. 60% faster processing, 99.9% uptime, $2M saved..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Project URL</label>
+            <input [(ngModel)]="form.projectUrl" placeholder="https://..." />
+          </div>
+        </div>
+      </div>
+
+      <div class="edit-sidebar">
+        <div class="form-card">
+          <h3>Visibility</h3>
+          <div class="toggle-row">
+            <label>Published</label>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="form.published" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <label>Featured</label>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="form.featured" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <h3>Project Details</h3>
+          <div class="form-group">
+            <label>Category</label>
+            <select [(ngModel)]="form.category">
+              <option value="">Select category</option>
+              @for (cat of categories; track cat) {
+                <option [value]="cat">{{ cat }}</option>
+              }
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Year</label>
+            <input type="number" [(ngModel)]="form.year" min="2010" max="2030" />
+          </div>
+          <div class="form-group">
+            <label>Cover Image URL</label>
+            <input [(ngModel)]="form.coverImage" placeholder="https://..." />
+          </div>
+        </div>
+
+        <button class="btn-save" (click)="save()" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : (isEdit ? 'Update Project' : 'Create Project') }}
+        </button>
+      </div>
+    </div>
+  }
+</div>

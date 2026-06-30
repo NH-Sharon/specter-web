@@ -1,0 +1,118 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Page Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up">
+        <span class="section-label">Our Work</span>
+        <h1 class="page-hero-title">
+          Projects That<br>
+          <span class="gradient-text">Define Industries</span>
+        </h1>
+        <p class="page-hero-desc">
+          From national revenue platforms to real-time fraud detection, we build systems that handle
+          millions of transactions and serve millions of people. Here's a sample of what we've delivered.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="portfolio-stats dark-section">
+    <div class="container-xl">
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-value gradient-text">500+</div>
+          <div class="stat-label">Projects Delivered</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value gradient-text">150+</div>
+          <div class="stat-label">Enterprise Clients</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value gradient-text">15+</div>
+          <div class="stat-label">Countries</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value gradient-text">99.9%</div>
+          <div class="stat-label">Avg Uptime SLA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter + Grid -->
+  <section class="section">
+    <div class="container-xl">
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        @for (cat of categories; track cat) {
+          <button
+            class="filter-btn"
+            [class.active]="activeFilter() === cat"
+            (click)="setFilter(cat)">
+            {{ cat }}
+          </button>
+        }
+      </div>
+
+      <!-- Project Grid -->
+      <div class="portfolio-grid">
+        @for (project of filteredProjects; track project.id) {
+          <div class="project-card card-base" [reveal] [revealDelay]="0">
+            <div class="project-card-header" [style.background]="'rgba(' + getCategoryColor(project.category) + ',0.08)'">
+              <div class="project-category-row">
+                <span class="chip" [style.background]="getCategoryColor(project.category) + '22'" [style.color]="getCategoryColor(project.category)">
+                  {{ project.category }}
+                </span>
+                <span class="project-year">{{ project.year }}</span>
+              </div>
+              <div class="project-icon">{{ project.icon }}</div>
+            </div>
+            <div class="project-card-body">
+              <h3 class="project-title">{{ project.title }}</h3>
+              <p class="project-client">{{ project.client }}</p>
+              <p class="project-desc">{{ project.description }}</p>
+
+              <div class="project-metrics">
+                @for (metric of project.metrics; track metric.label) {
+                  <div class="metric-item">
+                    <div class="metric-value" [style.color]="getCategoryColor(project.category)">{{ metric.value }}</div>
+                    <div class="metric-label">{{ metric.label }}</div>
+                  </div>
+                }
+              </div>
+
+              <div class="project-tech">
+                @for (tech of project.technologies; track tech) {
+                  <span class="chip">{{ tech }}</span>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section dark-section">
+    <div class="hero-mesh"></div>
+    <div class="container-xl" style="position:relative;z-index:1;">
+      <span class="section-label">Start Your Project</span>
+      <h2 class="section-title" style="color:white;">Ready to Build Something<br><span class="gradient-text">Extraordinary?</span></h2>
+      <p class="section-description" style="color:rgba(255,255,255,0.6);">
+        Let's discuss your project, challenges, and how we can help you achieve measurable outcomes.
+      </p>
+      <div class="cta-actions">
+        <a routerLink="/contact" class="btn btn-primary btn-lg">Start a Conversation</a>
+        <a routerLink="/case-studies" class="btn btn-outline btn-lg">View Case Studies</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

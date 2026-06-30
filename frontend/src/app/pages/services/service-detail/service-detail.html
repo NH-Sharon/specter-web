@@ -1,0 +1,139 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Service Hero -->
+  <section class="page-hero dark-section" [style.--service-color]="currentService().color">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up">
+        <a routerLink="/services" class="back-link">← All Services</a>
+        <div class="service-hero-icon">{{ currentService().icon }}</div>
+        <span class="section-label" [style.color]="currentService().color">{{ currentService().title }}</span>
+        <h1 class="page-hero-title">{{ currentService().tagline }}</h1>
+        <p class="page-hero-desc">{{ currentService().overview }}</p>
+        <div class="hero-actions" style="margin-top:2rem;">
+          <a routerLink="/contact" class="btn btn-primary btn-lg">Start a Project</a>
+          <a routerLink="/case-studies" class="btn btn-ghost btn-lg">View Case Studies</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Metrics -->
+  <section class="service-metrics-bar dark-section">
+    <div class="container-xl">
+      <div class="metrics-row">
+        @for (m of currentService().metrics; track m.label) {
+          <div class="service-metric">
+            <div class="service-metric-value gradient-text">{{ m.value }}</div>
+            <div class="service-metric-label">{{ m.label }}</div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="section-header-centered">
+        <span class="section-label">Why Choose Us</span>
+        <h2 class="section-title">What You Get<br><span class="gradient-text">With Specter</span></h2>
+      </div>
+      <div class="benefits-grid-4">
+        @for (b of currentService().benefits; track b.title; let i = $index) {
+          <div class="benefit-feature-card card-base" [reveal] [revealDelay]="i * 75">
+            <span class="benefit-feature-icon" [style.background]="currentService().color + '18'">{{ b.icon }}</span>
+            <h3 class="benefit-feature-title">{{ b.title }}</h3>
+            <p class="benefit-feature-desc">{{ b.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="section" style="background:var(--bg-surface);padding:3rem 0;">
+    <div class="container-xl">
+      <div class="section-header-centered" style="margin-bottom:2rem;">
+        <span class="section-label">Technologies</span>
+        <h2 class="section-title">Our <span class="gradient-text">Tech Stack</span></h2>
+      </div>
+      <div class="tech-stack-chips">
+        @for (tech of currentService().techStack; track tech) {
+          <span class="tech-chip-lg">{{ tech }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="section-header-centered">
+        <span class="section-label">How We Work</span>
+        <h2 class="section-title">Our <span class="gradient-text">Delivery Process</span></h2>
+      </div>
+      <div class="process-list">
+        @for (step of currentService().process; track step.step; let i = $index) {
+          <div class="process-item" [reveal] [revealDelay]="i * 75">
+            <div class="process-step-badge" [style.background]="currentService().color + '22'" [style.color]="currentService().color">
+              {{ step.step }}
+            </div>
+            <div class="process-item-body">
+              <h3 class="process-item-title">{{ step.title }}</h3>
+              <p class="process-item-desc">{{ step.description }}</p>
+            </div>
+            @if (i < currentService().process.length - 1) {
+              <div class="process-connector"></div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section class="section" style="background:var(--bg-surface);">
+    <div class="container-xl">
+      <div class="section-header-centered">
+        <span class="section-label">Common Questions</span>
+        <h2 class="section-title">FAQs About<br><span class="gradient-text">{{ currentService().title }}</span></h2>
+      </div>
+      <div class="faq-list">
+        @for (faq of currentService().faqs; track faq.question; let i = $index) {
+          <div class="faq-item" [class.open]="isFaqOpen(i)">
+            <button class="faq-question" (click)="toggleFaq(i)">
+              <span>{{ faq.question }}</span>
+              <span class="faq-toggle">{{ isFaqOpen(i) ? '−' : '+' }}</span>
+            </button>
+            @if (isFaqOpen(i)) {
+              <div class="faq-answer">
+                <p>{{ faq.answer }}</p>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section dark-section">
+    <div class="hero-mesh"></div>
+    <div class="container-xl" style="position:relative;z-index:1;">
+      <span class="section-label">Get Started</span>
+      <h2 class="section-title" style="color:white;">Ready to Start Your<br><span class="gradient-text">{{ currentService().title }} Project?</span></h2>
+      <p class="section-description" style="color:rgba(255,255,255,0.6);">
+        Book a free discovery call. We'll assess your situation and show you exactly how we'd approach it.
+      </p>
+      <div class="cta-actions">
+        <a routerLink="/contact" class="btn btn-primary btn-lg">Book Free Discovery Call</a>
+        <a routerLink="/portfolio" class="btn btn-outline btn-lg">See Our Work</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

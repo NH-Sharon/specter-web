@@ -1,0 +1,98 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Page Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up">
+        <span class="section-label">Resource Library</span>
+        <h1 class="page-hero-title">
+          Knowledge Built<br>
+          <span class="gradient-text">From Real Projects</span>
+        </h1>
+        <p class="page-hero-desc">
+          Whitepapers, guides, webinars, and checklists drawn from our work on production systems.
+          Free to use, practical to apply.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Resource -->
+  @if (featuredResource) {
+    <section class="section-sm">
+      <div class="container-xl">
+        <div class="featured-resource card-base">
+          <div class="featured-resource-badge">
+            <span>{{ featuredResource.typeIcon }}</span>
+            <span>{{ featuredResource.type }}</span>
+          </div>
+          <h2 class="featured-resource-title">{{ featuredResource.title }}</h2>
+          <p class="featured-resource-desc">{{ featuredResource.description }}</p>
+          <div class="featured-resource-meta">
+            <span class="chip">{{ featuredResource.category }}</span>
+            <span class="resource-meta-text">{{ featuredResource.date }}</span>
+            <span class="resource-meta-sep">·</span>
+            <span class="resource-meta-text">{{ featuredResource.readTime }}</span>
+          </div>
+          <a href="#" class="btn btn-primary">Download Free →</a>
+        </div>
+      </div>
+    </section>
+  }
+
+  <!-- Filter + Grid -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="filter-bar" style="margin-bottom:2.5rem;">
+        @for (type of types; track type) {
+          <button class="filter-btn" [class.active]="activeType() === type" (click)="setType(type)">
+            {{ type }}
+          </button>
+        }
+      </div>
+
+      <div class="resources-grid">
+        @for (r of filteredResources; track r.id) {
+          <div class="resource-card card-base" [reveal]>
+            <div class="resource-type-badge" [style.background]="getTypeColor(r.type) + '18'" [style.color]="getTypeColor(r.type)">
+              <span>{{ r.typeIcon }}</span>
+              <span>{{ r.type }}</span>
+            </div>
+            <h3 class="resource-title">{{ r.title }}</h3>
+            <p class="resource-desc">{{ r.description }}</p>
+            <div class="resource-footer">
+              <div class="resource-meta-row">
+                <span class="chip">{{ r.category }}</span>
+                <span class="resource-meta-text">{{ r.date }}</span>
+                <span class="resource-meta-sep">·</span>
+                <span class="resource-meta-text">{{ r.readTime }}</span>
+              </div>
+              <a href="#" class="btn btn-ghost" style="padding:0.375rem 0.75rem;font-size:0.875rem;">Download →</a>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section dark-section">
+    <div class="hero-mesh"></div>
+    <div class="container-xl" style="position:relative;z-index:1;">
+      <span class="section-label">Want More?</span>
+      <h2 class="section-title" style="color:white;">Get Exclusive Resources<br><span class="gradient-text">Delivered to You</span></h2>
+      <p class="section-description" style="color:rgba(255,255,255,0.6);">
+        Subscribe to receive our latest whitepapers, guides, and technical articles — delivered monthly, no spam.
+      </p>
+      <div class="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="your@email.com" aria-label="Email address"/>
+        <button class="btn btn-primary">Subscribe Free</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

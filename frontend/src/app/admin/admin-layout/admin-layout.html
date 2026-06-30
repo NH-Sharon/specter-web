@@ -1,0 +1,46 @@
+<div class="admin-shell" [class.sidebar-collapsed]="!sidebarOpen()">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sb-brand">
+      <app-logo [theme]="'dark'" [size]="sidebarOpen() ? 'md' : 'sm'"></app-logo>
+    </div>
+
+    <nav class="sb-nav">
+      @for (item of navItems; track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="active" class="sb-link">
+          <span class="sb-icon">{{ item.icon }}</span>
+          @if (sidebarOpen()) {
+            <span class="sb-label">{{ item.label }}</span>
+          }
+        </a>
+      }
+    </nav>
+
+    <div class="sb-footer">
+      <button class="sb-link sb-logout" (click)="logout()">
+        <span class="sb-icon">🚪</span>
+        @if (sidebarOpen()) {
+          <span class="sb-label">Logout</span>
+        }
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button class="topbar-toggle" (click)="toggleSidebar()">☰</button>
+      <div class="topbar-right">
+        <span class="topbar-user">
+          👤 {{ auth.currentUser()?.fullName || 'Admin' }}
+        </span>
+        <a routerLink="/" class="topbar-site-link" target="_blank">🌐 View Site</a>
+      </div>
+    </header>
+    <div class="admin-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</div>

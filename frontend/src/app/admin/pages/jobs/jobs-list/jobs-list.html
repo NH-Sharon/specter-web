@@ -1,0 +1,61 @@
+<div class="list-page">
+  <div class="list-header">
+    <div>
+      <h1>Job Postings</h1>
+      <p>Manage your open positions and career opportunities</p>
+    </div>
+    <a routerLink="/admin/jobs/new" class="btn-add">+ Post a Job</a>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-box">Loading...</div>
+  } @else if (jobs().length === 0) {
+    <div class="empty-box">
+      <div class="empty-icon">📋</div>
+      <h3>No job postings yet</h3>
+      <p>Create your first job posting to attract talent.</p>
+      <a routerLink="/admin/jobs/new" class="btn-add">+ Create First Posting</a>
+    </div>
+  } @else {
+    <div class="items-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Department</th>
+            <th>Location</th>
+            <th>Type</th>
+            <th>Level</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (job of jobs(); track job.id) {
+            <tr>
+              <td>
+                <div class="item-title">{{ job.title }}</div>
+              </td>
+              <td>{{ job.department || '—' }}</td>
+              <td>{{ job.location || '—' }}</td>
+              <td>{{ job.type || '—' }}</td>
+              <td>{{ job.level || '—' }}</td>
+              <td>
+                <span class="status-pill" [class.active]="job.active">
+                  {{ job.active ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td class="actions">
+                <a [routerLink]="['/admin/jobs', job.id, 'edit']" class="btn-edit">Edit</a>
+                <button (click)="toggleActive(job)" class="btn-toggle">
+                  {{ job.active ? 'Deactivate' : 'Activate' }}
+                </button>
+                <button (click)="delete(job.id)" class="btn-delete">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

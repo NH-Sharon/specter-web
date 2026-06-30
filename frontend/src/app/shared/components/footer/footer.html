@@ -1,0 +1,118 @@
+<footer class="footer">
+
+  <!-- Newsletter strip -->
+  <div class="footer-newsletter">
+    <div>
+      <h4>📬 Stay Updated with Specter Tech</h4>
+      <p>Get the latest tech insights, case studies, and company news in your inbox.</p>
+    </div>
+    <div class="nl-form">
+      @if (!subscribed()) {
+        <input type="email" [(ngModel)]="email" placeholder="Enter your email address" />
+        <button (click)="subscribe($event)">Subscribe</button>
+      } @else {
+        <span style="color:#4ADE80; font-weight:600; font-size:14px;">✅ Subscribed! Thank you.</span>
+      }
+    </div>
+  </div>
+
+  <div class="footer-divider"></div>
+
+  <!-- Main grid -->
+  <div class="footer-body">
+
+    <!-- Brand column -->
+    <div class="footer-brand">
+      <app-logo theme="dark"></app-logo>
+      <p>
+        Engineering the future with cloud, data, and AI. Bangladesh's premier technology partner,
+        serving enterprises and governments across 15+ countries since 2017.
+      </p>
+      <div class="footer-badges">
+        <span class="fbadge">🏅 ISO 9001</span>
+        <span class="fbadge">☁️ AWS Partner</span>
+        <span class="fbadge">🇧🇩 BASIS</span>
+        <span class="fbadge">🏆 BACCO</span>
+      </div>
+      <div class="footer-socials">
+        <a class="soc-btn" title="LinkedIn">💼</a>
+        <a class="soc-btn" title="GitHub">🐙</a>
+        <a class="soc-btn" title="Twitter">𝕏</a>
+        <a class="soc-btn" title="Facebook">📘</a>
+        <a class="soc-btn" title="YouTube">▶️</a>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        @for (s of services; track s.label) {
+          <li><a [routerLink]="s.path">{{ s.label }}</a></li>
+        }
+      </ul>
+    </div>
+
+    <!-- Company -->
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        @for (c of company; track c.label) {
+          <li><a [routerLink]="c.path">{{ c.label }}</a></li>
+        }
+      </ul>
+    </div>
+
+    <!-- Technologies -->
+    <div class="footer-col">
+      <h4>Technologies</h4>
+      <ul>
+        @for (t of technologies; track t.label) {
+          <li><a [routerLink]="t.path">{{ t.label }}</a></li>
+        }
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item">
+        <span class="fci-icon">📍</span>
+        <div class="fci-text">Mannan Plaza, Khilkhet<br>Dhaka 1229, Bangladesh</div>
+      </div>
+      <div class="footer-contact-item">
+        <span class="fci-icon">📍</span>
+        <div class="fci-text">Silver Tower, Business Bay<br>Dubai, UAE</div>
+      </div>
+      <div class="footer-contact-item">
+        <span class="fci-icon">📧</span>
+        <div class="fci-text">hello&#64;spectertech.com.bd<br>support&#64;spectertech.com.bd</div>
+      </div>
+      <div class="footer-contact-item">
+        <span class="fci-icon">📞</span>
+        <div class="fci-text">+880 1700-000000<br>+971 50-0000000</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-divider"></div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <div class="fb-left">
+        © {{ year }} Specter Technologies Ltd. All Rights Reserved.
+        <a routerLink="/privacy">Privacy Policy</a>·
+        <a routerLink="/terms">Terms of Use</a>·
+        <a routerLink="/faq">Support</a>
+      </div>
+      <div class="fb-right">
+        <span class="payment-badge">💳 Visa</span>
+        <span class="payment-badge">💳 Mastercard</span>
+        <span class="payment-badge">🏦 SWIFT</span>
+        <span class="payment-badge">📱 bKash</span>
+      </div>
+    </div>
+  </div>
+
+</footer>

@@ -1,0 +1,81 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Page Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up">
+        <span class="section-label">FAQ</span>
+        <h1 class="page-hero-title">
+          Frequently Asked<br>
+          <span class="gradient-text">Questions</span>
+        </h1>
+        <p class="page-hero-desc">
+          Everything you need to know about working with Specter Technologies — from our process
+          and pricing to support and security.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="faq-layout">
+        <!-- Category Tabs -->
+        <nav class="faq-categories">
+          @for (cat of categories; track cat.id) {
+            <button
+              class="faq-cat-btn"
+              [class.active]="activeCategory() === cat.id"
+              (click)="setCategory(cat.id)">
+              <span class="faq-cat-icon">{{ cat.icon }}</span>
+              <span>{{ cat.label }}</span>
+            </button>
+          }
+        </nav>
+
+        <!-- FAQ Items -->
+        <div class="faq-content">
+          @for (item of activeItems; track item.question; let i = $index) {
+            <div class="faq-item" [class.open]="isOpen(activeCategory() + '-' + i)">
+              <button class="faq-question" (click)="toggleItem(activeCategory() + '-' + i)">
+                <span>{{ item.question }}</span>
+                <span class="faq-toggle">{{ isOpen(activeCategory() + '-' + i) ? '−' : '+' }}</span>
+              </button>
+              @if (isOpen(activeCategory() + '-' + i)) {
+                <div class="faq-answer">
+                  <p>{{ item.answer }}</p>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Prompt -->
+  <section class="section" style="padding-top:0;">
+    <div class="container-xl">
+      <div class="faq-contact-card dark-section">
+        <div class="hero-mesh"></div>
+        <div class="faq-contact-content">
+          <span class="section-label">Still have questions?</span>
+          <h3 class="faq-contact-title">We're Happy to Talk</h3>
+          <p class="faq-contact-desc">
+            Can't find the answer you're looking for? Our team responds to all inquiries within one business day.
+          </p>
+          <div class="cta-actions">
+            <a routerLink="/contact" class="btn btn-primary">Contact Us</a>
+            <a href="mailto:hello@spectertech.io" class="btn btn-ghost">hello@spectertech.io</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

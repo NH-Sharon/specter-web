@@ -1,0 +1,90 @@
+<div class="edit-page">
+  <div class="edit-header">
+    <a routerLink="/admin/jobs" class="back-btn">← Back</a>
+    <h1>{{ isEdit ? 'Edit Job Posting' : 'New Job Posting' }}</h1>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-box">Loading...</div>
+  } @else {
+    @if (error()) { <div class="alert-error">{{ error() }}</div> }
+    @if (success()) { <div class="alert-success">{{ success() }}</div> }
+
+    <div class="edit-grid">
+      <div class="edit-main">
+        <div class="form-card">
+          <div class="form-group">
+            <label>Job Title *</label>
+            <input [(ngModel)]="form.title" placeholder="e.g. Senior Cloud Engineer..." />
+          </div>
+          <div class="form-group">
+            <label>Description *</label>
+            <textarea [(ngModel)]="form.description" rows="6" placeholder="Overview of the role and what the candidate will do..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Responsibilities</label>
+            <textarea [(ngModel)]="form.responsibilities" rows="6" placeholder="List key responsibilities (one per line or use bullets)..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Requirements</label>
+            <textarea [(ngModel)]="form.requirements" rows="6" placeholder="List required skills and qualifications (one per line)..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="edit-sidebar">
+        <div class="form-card">
+          <h3>Status</h3>
+          <div class="toggle-row">
+            <label>Active / Accepting Applications</label>
+            <label class="toggle">
+              <input type="checkbox" [(ngModel)]="form.active" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <h3>Job Details</h3>
+          <div class="form-group">
+            <label>Department</label>
+            <select [(ngModel)]="form.department">
+              <option value="">Select department</option>
+              @for (dept of departments; track dept) {
+                <option [value]="dept">{{ dept }}</option>
+              }
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Location</label>
+            <input [(ngModel)]="form.location" placeholder="e.g. Dhaka, Bangladesh / Remote" />
+          </div>
+          <div class="form-group">
+            <label>Employment Type</label>
+            <select [(ngModel)]="form.type">
+              @for (t of types; track t) {
+                <option [value]="t">{{ t }}</option>
+              }
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Experience Level</label>
+            <select [(ngModel)]="form.level">
+              @for (l of levels; track l) {
+                <option [value]="l">{{ l }}</option>
+              }
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Salary Range</label>
+            <input [(ngModel)]="form.salaryRange" placeholder="e.g. BDT 80,000 - 120,000 / month" />
+          </div>
+        </div>
+
+        <button class="btn-save" (click)="save()" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : (isEdit ? 'Update Posting' : 'Create Posting') }}
+        </button>
+      </div>
+    </div>
+  }
+</div>

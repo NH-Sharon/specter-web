@@ -1,0 +1,112 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Job Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up" style="text-align:left;">
+        <a routerLink="/careers" class="back-link">← All Open Positions</a>
+        <div class="job-hero-meta">
+          <span class="chip">{{ job.department }}</span>
+          <span class="chip">{{ job.level }}</span>
+          <span class="chip">{{ job.type }}</span>
+        </div>
+        <h1 class="page-hero-title">{{ job.title }}</h1>
+        <div class="job-hero-details">
+          <span>📍 {{ job.location }}</span>
+          <span class="sep">·</span>
+          <span>💰 {{ job.salary }}</span>
+          <span class="sep">·</span>
+          <span>📅 Posted {{ job.posted }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="job-layout">
+        <!-- Main Content -->
+        <div class="job-main">
+          <!-- Overview -->
+          <div class="job-section card-base">
+            <h2 class="job-section-title">About This Role</h2>
+            <p class="job-overview">{{ job.overview }}</p>
+          </div>
+
+          <!-- Responsibilities -->
+          <div class="job-section card-base">
+            <h2 class="job-section-title">What You'll Do</h2>
+            <ul class="job-list">
+              @for (r of job.responsibilities; track r) {
+                <li>{{ r }}</li>
+              }
+            </ul>
+          </div>
+
+          <!-- Requirements -->
+          <div class="job-section card-base">
+            <h2 class="job-section-title">What We're Looking For</h2>
+            <ul class="job-list">
+              @for (r of job.requirements; track r) {
+                <li>{{ r }}</li>
+              }
+            </ul>
+          </div>
+
+          <!-- Nice to Have -->
+          <div class="job-section card-base">
+            <h2 class="job-section-title">Nice to Have</h2>
+            <ul class="job-list nice-to-have">
+              @for (r of job.niceToHave; track r) {
+                <li>{{ r }}</li>
+              }
+            </ul>
+          </div>
+
+          <!-- Tech Stack -->
+          <div class="job-section card-base">
+            <h2 class="job-section-title">Tech Stack</h2>
+            <div class="job-tech-chips">
+              @for (tech of job.techStack; track tech) {
+                <span class="chip">{{ tech }}</span>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="job-sidebar">
+          <div class="job-apply-card card-base">
+            <h3 class="apply-card-title">Apply for This Role</h3>
+            <p class="apply-card-desc">Takes about 5 minutes. No cover letter required — just your resume and relevant links.</p>
+            <a href="mailto:careers@spectertech.io" class="btn btn-primary" style="width:100%;justify-content:center;display:flex;">Apply Now</a>
+            <p class="apply-note">Or email <a href="mailto:careers@spectertech.io">careers@spectertech.io</a></p>
+          </div>
+
+          <!-- Interview Process -->
+          <div class="card-base">
+            <h3 class="apply-card-title">Interview Process</h3>
+            <div class="process-steps">
+              @for (step of job.process; track step.step) {
+                <div class="process-step">
+                  <div class="process-step-num">{{ step.step }}</div>
+                  <div class="process-step-body">
+                    <div class="process-step-title">{{ step.title }}</div>
+                    <div class="process-step-duration">{{ step.duration }}</div>
+                    <div class="process-step-desc">{{ step.description }}</div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

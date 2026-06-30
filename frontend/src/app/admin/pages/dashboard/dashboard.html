@@ -1,0 +1,71 @@
+<div class="dashboard">
+  <div class="page-header">
+    <h1>Dashboard</h1>
+    <p>Welcome back, Admin! Here's what's happening on your website.</p>
+  </div>
+
+  <!-- Stats grid -->
+  <div class="stats-grid">
+    @for (stat of stats(); track stat.label) {
+      <a [routerLink]="stat.link" class="stat-card">
+        <div class="stat-icon" [style.background]="stat.color + '15'" [style.color]="stat.color">
+          {{ stat.icon }}
+        </div>
+        <div class="stat-body">
+          <div class="stat-value">{{ stat.value }}</div>
+          <div class="stat-label">{{ stat.label }}</div>
+        </div>
+      </a>
+    }
+  </div>
+
+  <!-- Quick actions -->
+  <div class="section-card">
+    <h2>Quick Actions</h2>
+    <div class="quick-grid">
+      @for (ql of quickLinks; track ql.path) {
+        <a [routerLink]="ql.path" class="quick-btn" [style.borderColor]="ql.color">
+          <span [style.color]="ql.color">{{ ql.icon }}</span>
+          {{ ql.label }}
+        </a>
+      }
+    </div>
+  </div>
+
+  <!-- Recent inquiries -->
+  <div class="section-card">
+    <div class="card-header">
+      <h2>Recent Inquiries</h2>
+      <a routerLink="/admin/inquiries" class="card-link">View All →</a>
+    </div>
+
+    @if (loading()) {
+      <div class="loading-text">Loading...</div>
+    } @else if (recentInquiries().length === 0) {
+      <div class="empty-text">No inquiries yet. They will appear here when visitors contact you.</div>
+    } @else {
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (inq of recentInquiries(); track inq.id) {
+            <tr>
+              <td>{{ inq.name }}</td>
+              <td>{{ inq.email }}</td>
+              <td>{{ inq.subject }}</td>
+              <td><span class="status-badge" [class]="statusClass(inq.status)">{{ inq.status }}</span></td>
+              <td>{{ inq.createdAt | date:'shortDate' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>

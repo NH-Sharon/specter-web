@@ -1,0 +1,119 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Page Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up">
+        <span class="section-label">Solutions</span>
+        <h1 class="page-hero-title">
+          Tailored Solutions for<br>
+          <span class="gradient-text">Complex Challenges</span>
+        </h1>
+        <p class="page-hero-desc">
+          We package our expertise into battle-tested solution frameworks — each designed to address
+          specific transformation challenges with proven architectures, delivery playbooks, and measurable outcomes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="solutions-layout">
+        <!-- Sidebar Nav -->
+        <nav class="solutions-nav">
+          @for (sol of solutions; track sol.title; let i = $index) {
+            <button
+              class="sol-nav-item"
+              [class.active]="activeSolution() === i"
+              (click)="setActive(i)">
+              <span class="sol-nav-icon">{{ sol.icon }}</span>
+              <span class="sol-nav-title">{{ sol.title }}</span>
+            </button>
+          }
+        </nav>
+
+        <!-- Detail Panel -->
+        @for (sol of solutions; track sol.title; let i = $index) {
+          @if (activeSolution() === i) {
+            <div class="solution-detail">
+              <div class="solution-detail-header">
+                <span class="sol-icon-lg">{{ sol.icon }}</span>
+                <div>
+                  <span class="section-label" [style.color]="sol.color">{{ sol.title }}</span>
+                  <h2 class="solution-title">{{ sol.tagline }}</h2>
+                </div>
+              </div>
+              <p class="solution-description">{{ sol.description }}</p>
+
+              <div class="solution-body-grid">
+                <!-- Use Cases -->
+                <div class="solution-card">
+                  <h3 class="solution-card-title">Use Cases</h3>
+                  <ul class="use-case-list">
+                    @for (uc of sol.useCases; track uc) {
+                      <li>
+                        <span class="use-case-dot" [style.background]="sol.color"></span>
+                        {{ uc }}
+                      </li>
+                    }
+                  </ul>
+                </div>
+
+                <!-- Outcomes -->
+                <div class="solution-card">
+                  <h3 class="solution-card-title">Typical Outcomes</h3>
+                  <div class="outcomes-grid">
+                    @for (o of sol.outcomes; track o.label) {
+                      <div class="outcome-item">
+                        <div class="outcome-value" [style.color]="sol.color">{{ o.value }}</div>
+                        <div class="outcome-label">{{ o.label }}</div>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <!-- Technologies -->
+                <div class="solution-card solution-card-full">
+                  <h3 class="solution-card-title">Core Technologies</h3>
+                  <div class="tech-chips">
+                    @for (tech of sol.technologies; track tech) {
+                      <span class="chip">{{ tech }}</span>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="solution-cta">
+                <a routerLink="/contact" class="btn btn-primary">Discuss This Solution</a>
+                <a routerLink="/case-studies" class="btn btn-ghost">View Related Case Studies</a>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section dark-section">
+    <div class="hero-mesh"></div>
+    <div class="container-xl" style="position:relative;z-index:1;">
+      <span class="section-label">Not sure which solution fits?</span>
+      <h2 class="section-title" style="color:white;">Let's Design the Right<br><span class="gradient-text">Solution Together</span></h2>
+      <p class="section-description" style="color:rgba(255,255,255,0.6);">
+        Our architects will assess your situation and recommend the approach that delivers the most value in the shortest time.
+      </p>
+      <div class="cta-actions">
+        <a routerLink="/contact" class="btn btn-primary btn-lg">Book a Free Assessment</a>
+        <a routerLink="/services" class="btn btn-outline btn-lg">Explore Services</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

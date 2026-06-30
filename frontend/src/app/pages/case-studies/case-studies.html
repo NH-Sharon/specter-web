@@ -1,0 +1,95 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Page Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up">
+        <span class="section-label">Case Studies</span>
+        <h1 class="page-hero-title">
+          Real Challenges,<br>
+          <span class="gradient-text">Proven Results</span>
+        </h1>
+        <p class="page-hero-desc">
+          Every case study is a story of a real problem, a tailored solution, and measurable business impact.
+          These are the engagements we're most proud of.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Studies -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="case-studies-list">
+        @for (cs of caseStudies; track cs.id; let i = $index) {
+          <div class="cs-card card-base" [reveal]>
+            <div class="cs-card-header">
+              <div class="cs-icon" [style.background]="cs.color + '18'">{{ cs.icon }}</div>
+              <div class="cs-meta">
+                <span class="chip" [style.background]="cs.color + '22'" [style.color]="cs.color">{{ cs.industry }}</span>
+                <div class="cs-team-info">
+                  <span>{{ cs.duration }}</span>
+                  <span class="cs-sep">·</span>
+                  <span>{{ cs.team }}</span>
+                </div>
+              </div>
+            </div>
+
+            <h2 class="cs-title">{{ cs.title }}</h2>
+            <p class="cs-client">{{ cs.client }}</p>
+
+            <div class="cs-story">
+              <div class="cs-story-block">
+                <h3 class="cs-story-label">The Challenge</h3>
+                <p class="cs-story-text">{{ cs.problem }}</p>
+              </div>
+              <div class="cs-story-block">
+                <h3 class="cs-story-label">Our Solution</h3>
+                <p class="cs-story-text">{{ cs.solution }}</p>
+              </div>
+            </div>
+
+            <!-- Metrics -->
+            <div class="cs-metrics">
+              @for (r of cs.results; track r.label) {
+                <div class="cs-metric" [class.highlight]="r.highlight">
+                  <div class="cs-metric-value" [style.color]="r.highlight ? cs.color : 'var(--text-primary)'">{{ r.value }}</div>
+                  <div class="cs-metric-label">{{ r.label }}</div>
+                </div>
+              }
+            </div>
+
+            <!-- Technologies -->
+            <div class="cs-tech">
+              <span class="cs-tech-label">Technologies:</span>
+              @for (tech of cs.technologies; track tech) {
+                <span class="chip">{{ tech }}</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section dark-section">
+    <div class="hero-mesh"></div>
+    <div class="container-xl" style="position:relative;z-index:1;">
+      <span class="section-label">Your Success Story</span>
+      <h2 class="section-title" style="color:white;">Let's Write Your<br><span class="gradient-text">Case Study Next</span></h2>
+      <p class="section-description" style="color:rgba(255,255,255,0.6);">
+        Every great outcome starts with a conversation. Tell us about your challenge and we'll show you how we'd approach it.
+      </p>
+      <div class="cta-actions">
+        <a routerLink="/contact" class="btn btn-primary btn-lg">Start a Conversation</a>
+        <a routerLink="/portfolio" class="btn btn-outline btn-lg">View Full Portfolio</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

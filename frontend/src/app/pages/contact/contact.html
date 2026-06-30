@@ -1,0 +1,222 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content animate-fade-up">
+      <span class="section-label">Let's Talk</span>
+      <h1 class="page-hero-title">Start Your <span class="gradient-text">Transformation</span></h1>
+      <p class="page-hero-desc">
+        Tell us about your project. Our solution architects will respond within 24 hours
+        with a personalized assessment and approach.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Content -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="contact-grid">
+
+        <!-- Form -->
+        <div class="contact-form-wrap" [reveal]="'reveal-left'">
+          @if (!submitted()) {
+            <form class="contact-form" (submit)="submitForm($event)">
+              <h2 class="form-title">Tell us about your project</h2>
+              <p class="form-subtitle">All fields marked with * are required.</p>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="name">Full Name *</label>
+                  <input
+                    id="name" type="text" class="form-input"
+                    placeholder="John Smith"
+                    [(ngModel)]="form.name" name="name" required
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="email">Work Email *</label>
+                  <input
+                    id="email" type="email" class="form-input"
+                    placeholder="john@company.com"
+                    [(ngModel)]="form.email" name="email" required
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="company">Company Name *</label>
+                  <input
+                    id="company" type="text" class="form-input"
+                    placeholder="Acme Corporation"
+                    [(ngModel)]="form.company" name="company" required
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="phone">Phone Number</label>
+                  <input
+                    id="phone" type="tel" class="form-input"
+                    placeholder="+1 (555) 000-0000"
+                    [(ngModel)]="form.phone" name="phone"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="service">Service of Interest *</label>
+                  <select id="service" class="form-input form-select" [(ngModel)]="form.service" name="service" required>
+                    <option value="" disabled>Select a service...</option>
+                    @for (svc of services; track svc) {
+                      <option [value]="svc">{{ svc }}</option>
+                    }
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="budget">Estimated Budget</label>
+                  <select id="budget" class="form-input form-select" [(ngModel)]="form.budget" name="budget">
+                    <option value="" disabled>Select a range...</option>
+                    @for (b of budgets; track b) {
+                      <option [value]="b">{{ b }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="message">Project Description *</label>
+                <textarea
+                  id="message" class="form-input form-textarea"
+                  placeholder="Tell us about your project goals, current challenges, timeline, and any specific requirements..."
+                  [(ngModel)]="form.message" name="message" required rows="6"
+                ></textarea>
+              </div>
+
+              <div class="form-footer">
+                <p class="form-privacy">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <rect x="2" y="6" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.25"/>
+                    <path d="M4.5 6V4.5a2.5 2.5 0 0 1 5 0V6" stroke="currentColor" stroke-width="1.25"/>
+                  </svg>
+                  Your information is protected. We never share your data.
+                </p>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg"
+                  [disabled]="submitting()"
+                >
+                  @if (submitting()) {
+                    <span class="submitting-spinner"></span>
+                    Sending...
+                  } @else {
+                    Send Message
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <path d="M4 9H14M9 4L14 9L9 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                  }
+                </button>
+              </div>
+            </form>
+          } @else {
+            <div class="success-state">
+              <div class="success-icon">✓</div>
+              <h2 class="success-title">Message Received!</h2>
+              <p class="success-desc">
+                Thank you for reaching out, <strong>{{ form.name }}</strong>!
+                Our solution architects will review your request and get back to you
+                at <strong>{{ form.email }}</strong> within 24 hours.
+              </p>
+              <div class="success-next">
+                <p class="success-next-label">What happens next:</p>
+                <ul class="success-steps">
+                  <li>✓ We review your project requirements</li>
+                  <li>⏳ Initial response within 24 hours</li>
+                  <li>📅 30-minute discovery call scheduled</li>
+                  <li>📋 Detailed proposal delivered in 5 days</li>
+                </ul>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Info Panel -->
+        <div class="contact-info" [reveal]="'reveal-right'">
+          <div class="info-card">
+            <h3 class="info-title">Why Work With Us?</h3>
+            <div class="info-points">
+              @for (point of [
+                {icon:'⚡', title:'Fast Response', desc:'We respond to all inquiries within 24 hours, with discovery calls typically scheduled within 48 hours.'},
+                {icon:'🎯', title:'Dedicated Solution Architect', desc:'Every project is assessed by a senior architect who understands your industry and technical requirements.'},
+                {icon:'📋', title:'Detailed Proposals', desc:'We provide transparent, itemized proposals with clear deliverables, timelines, and pricing.'},
+                {icon:'🤝', title:'No Lock-in Contracts', desc:'Flexible engagement models. Start with a pilot project and scale as you gain confidence.'}
+              ]; track point.title) {
+                <div class="info-point">
+                  <div class="info-point-icon">{{ point.icon }}</div>
+                  <div>
+                    <p class="info-point-title">{{ point.title }}</p>
+                    <p class="info-point-desc">{{ point.desc }}</p>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h3 class="info-title">Direct Contact</h3>
+            <div class="contact-direct">
+              <a href="mailto:hello@spectertech.com" class="direct-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                hello@spectertech.com
+              </a>
+              <a href="tel:+8802984456" class="direct-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+                +880 2 9844 567
+              </a>
+            </div>
+          </div>
+
+          <div class="info-card response-time-card">
+            <div class="rt-header">
+              <div class="rt-dot"></div>
+              <span>Available for new projects</span>
+            </div>
+            <p class="rt-text">Average response time: <strong>&lt; 4 hours</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Office Locations -->
+      <div class="offices-section" [reveal]>
+        <h2 class="offices-title">Our Offices</h2>
+        <div class="offices-grid">
+          @for (office of offices; track office.city) {
+            <div class="office-card">
+              <div class="office-header">
+                <span class="office-flag">{{ office.flag }}</span>
+                <div>
+                  <h3 class="office-city">{{ office.city }}</h3>
+                  <p class="office-country">{{ office.country }}</p>
+                </div>
+              </div>
+              <p class="office-address">{{ office.address }}</p>
+              <div class="office-contacts">
+                <a [href]="'tel:' + office.phone" class="office-contact-link">{{ office.phone }}</a>
+                <a [href]="'mailto:' + office.email" class="office-contact-link">{{ office.email }}</a>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

@@ -1,0 +1,95 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Page Hero -->
+  <section class="page-hero dark-section">
+    <div class="hero-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="container-xl page-hero-content">
+      <div class="animate-fade-up">
+        <span class="section-label">Industries We Serve</span>
+        <h1 class="page-hero-title">
+          Deep Domain Expertise<br>
+          <span class="gradient-text">Across 8 Industries</span>
+        </h1>
+        <p class="page-hero-desc">
+          We don't just build technology — we understand your regulatory environment, operational challenges,
+          and strategic goals. Domain expertise is what separates good technology from transformative solutions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industries Grid -->
+  <section class="section">
+    <div class="container-xl">
+      <div class="industries-grid">
+        @for (industry of industries; track industry.title; let i = $index) {
+          <div class="industry-card card-base" [reveal] [revealDelay]="(i % 4) * 75">
+            <div class="industry-card-top">
+              <div class="industry-icon" [style.background]="industry.color + '18'">
+                {{ industry.icon }}
+              </div>
+              <div>
+                <h2 class="industry-title">{{ industry.title }}</h2>
+                <p class="industry-subtitle" [style.color]="industry.color">{{ industry.subtitle }}</p>
+              </div>
+            </div>
+
+            <p class="industry-desc">{{ industry.description }}</p>
+
+            <div class="industry-sections">
+              <div class="industry-section">
+                <h4 class="industry-section-title">Challenges We Solve</h4>
+                <ul class="industry-list">
+                  @for (c of industry.challenges; track c) {
+                    <li>
+                      <span class="list-dot" [style.background]="industry.color"></span>
+                      {{ c }}
+                    </li>
+                  }
+                </ul>
+              </div>
+
+              <div class="industry-section">
+                <h4 class="industry-section-title">Our Solutions</h4>
+                <ul class="industry-list">
+                  @for (s of industry.solutions; track s) {
+                    <li>
+                      <span class="list-dot" [style.background]="industry.color"></span>
+                      {{ s }}
+                    </li>
+                  }
+                </ul>
+              </div>
+            </div>
+
+            <div class="industry-compliance">
+              @for (c of industry.compliance; track c) {
+                <span class="badge badge-primary">{{ c }}</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section dark-section">
+    <div class="hero-mesh"></div>
+    <div class="container-xl" style="position:relative;z-index:1;">
+      <span class="section-label">Your Industry</span>
+      <h2 class="section-title" style="color:white;">Don't See Your Industry?<br><span class="gradient-text">Let's Talk Anyway</span></h2>
+      <p class="section-description" style="color:rgba(255,255,255,0.6);">
+        Our engineering capabilities apply across many sectors. Tell us about your challenges and we'll show you how we can help.
+      </p>
+      <div class="cta-actions">
+        <a routerLink="/contact" class="btn btn-primary btn-lg">Talk to an Expert</a>
+        <a routerLink="/portfolio" class="btn btn-outline btn-lg">View Our Portfolio</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

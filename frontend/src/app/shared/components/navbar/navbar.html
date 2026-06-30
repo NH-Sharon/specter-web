@@ -1,0 +1,86 @@
+<header class="navbar" [class.scrolled]="scrolled()">
+  <div class="nav-inner">
+
+    <!-- Logo -->
+    <app-logo theme="light"></app-logo>
+
+    <!-- Desktop Nav -->
+    <ul class="nav-links">
+      @for (link of navLinks; track link.label) {
+        @if (link.children) {
+          <li class="nav-item">
+            <button>
+              {{ link.label }}
+              <span class="arrow">▾</span>
+            </button>
+            <div class="mega-menu">
+              <div class="mega-grid">
+                @for (group of link.children; track group.title) {
+                  <div class="mega-group">
+                    <h4>{{ group.title }}</h4>
+                    @for (item of group.items; track item.label) {
+                      <a [routerLink]="item.path" class="mega-item">
+                        <div class="mi-icon">{{ item.icon }}</div>
+                        <div>
+                          <div class="mi-label">{{ item.label }}</div>
+                          @if (item.desc) {
+                            <div class="mi-desc">{{ item.desc }}</div>
+                          }
+                        </div>
+                      </a>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </li>
+        } @else {
+          <li class="nav-item">
+            <a [routerLink]="link.path" routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: link.path === '/'}">
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      }
+    </ul>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <button class="btn-theme" (click)="themeService.toggle()"
+              [title]="themeService.isDark() ? 'Light mode' : 'Dark mode'">
+        {{ themeService.isDark() ? '☀️' : '🌙' }}
+      </button>
+      <a routerLink="/contact" class="btn-nav-cta">Get in Touch</a>
+      <button class="btn-hamburger" [class.open]="mobileOpen()" (click)="toggleMobile()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" [class.open]="mobileOpen()">
+    @for (link of navLinks; track link.label) {
+      <div class="mob-item">
+        @if (link.children) {
+          <button>{{ link.label }} <span>▾</span></button>
+          <div class="mob-sub">
+            @for (group of link.children; track group.title) {
+              @for (item of group.items; track item.label) {
+                <a [routerLink]="item.path" (click)="toggleMobile()">
+                  {{ item.icon }} {{ item.label }}
+                </a>
+              }
+            }
+          </div>
+        } @else {
+          <a [routerLink]="link.path" (click)="toggleMobile()">{{ link.label }}</a>
+        }
+      </div>
+    }
+    <div class="mob-cta">
+      <a routerLink="/contact" class="btn-primary" (click)="toggleMobile()">Get in Touch →</a>
+      <a routerLink="/portfolio" class="btn-outline" (click)="toggleMobile()">View Portfolio</a>
+    </div>
+  </div>
+</header>

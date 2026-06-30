@@ -1,0 +1,57 @@
+<div class="list-page">
+  <div class="list-header">
+    <div>
+      <h1>Portfolio Projects</h1>
+      <p>Manage your showcase projects and case studies</p>
+    </div>
+    <a routerLink="/admin/portfolio/new" class="btn-add">+ Add Project</a>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-box">Loading...</div>
+  } @else if (projects().length === 0) {
+    <div class="empty-box">
+      <div class="empty-icon">💼</div>
+      <h3>No projects yet</h3>
+      <p>Add your first portfolio project to showcase your work.</p>
+      <a routerLink="/admin/portfolio/new" class="btn-add">+ Add First Project</a>
+    </div>
+  } @else {
+    <div class="items-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Client</th>
+            <th>Category</th>
+            <th>Year</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (project of projects(); track project.id) {
+            <tr>
+              <td>
+                <div class="item-title">{{ project.title }}</div>
+                <div class="item-slug">{{ project.technologies }}</div>
+              </td>
+              <td>{{ project.client || '—' }}</td>
+              <td>{{ project.category || '—' }}</td>
+              <td>{{ project.year || '—' }}</td>
+              <td>
+                <span class="status-pill" [class.published]="project.published">
+                  {{ project.published ? 'Published' : 'Draft' }}
+                </span>
+              </td>
+              <td class="actions">
+                <a [routerLink]="['/admin/portfolio', project.id, 'edit']" class="btn-edit">Edit</a>
+                <button (click)="delete(project.id)" class="btn-delete">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
