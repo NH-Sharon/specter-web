@@ -2,29 +2,6 @@ require('dotenv').config();
 const express    = require('express');
 const cors       = require('cors');
 const { seedContent } = require('./db/seedContent');
-const pool       = require('./db/pool');
-const fs         = require('fs');
-const path       = require('path');
-
-async function runMigrations() {
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS schema_migrations (
-      filename VARCHAR(255) PRIMARY KEY,
-      applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-    )
-  `);
-  const dir = path.join(__dirname, '../migrations');
-  const files = fs.readdirSync(dir).filter(f => f.endsWith('.sql')).sort();
-  for (const file of files) {
-    const { rows } = await pool.query('SELECT 1 FROM schema_migrations WHERE filename=$1', [file]);
-    if (rows.length) { console.log(`  skip  ${file}`); continue; }
-    const sql = fs.readFileSync(path.join(dir, file), 'utf8');
-    await pool.query(sql);
-    await pool.query('INSERT INTO schema_migrations (filename) VALUES ($1)', [file]);
-    console.log(`  apply ${file}`);
-  }
-  console.log('Migrations complete.');
-}
 
 const app = express();
 
@@ -83,6 +60,5 @@ app.use((err, req, res, _next) => {
 const PORT = parseInt(process.env.PORT || '8080');
 app.listen(PORT, async () => {
   console.log(`Specter API running on http://localhost:${PORT}`);
-  await runMigrations().catch(err => console.warn('Migration skipped:', err.message));
   await seedContent().catch(err => console.warn('Content seed skipped:', err.message));
 });
